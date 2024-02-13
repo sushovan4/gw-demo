@@ -1,0 +1,78 @@
+:::{.quote}
+"Computers are to computer science what telescopes are to astronomy."    
+– E. Dijkstra
+:::
+
+# Introduction
+
+## Objectives
+
+- Learn how to solve problems
+
+- Learn what computer scientists study
+
+- Understand and analyze some standard algorithms 
+
+- Understand the form and function of various data structures
+
+- Learn how to implement them in Python
+
+- Learn to write bug-free and efficient code
+
+- How to write pseudo-code and analyze them on a whiteboard
+
+## What is a computer?
+
+> A machine that stores and manipulates information under the control of a changeable program.
+
+Can computers do everything?
+
+> Not everything. Things that need infinite steps are not suitable for computers. For example, computers can not represent (without any approximation) the irrational numbers.
+
+## What is computer science
+
+It is not the study of computers!!
+
+> "Computers are to computer science what telescopes are to astronomy." -- E. Dijkstra
+
+- What can be computed?
+
+- How can something be computed? 
+
+    > a recipe of computing something is called an **algorithm**
+
+- Making computations more efficient
+
+## Hardware
+
+![](../images/Picture1.png)
+
+## Programming Languages
+
+- Why do we need another language for speaking to computers??
+    > our languages are not **precise**
+
+- Computer semantics, on the other hand, are very precise
+
+- Coding the process of writing an algorithm in a programming language
+
+## Do computers really understand a programming language?
+
+> **No!!**
+
+- Computer hardware can only understand a very *low-level* language, known as
+**machine language**
+
+- Why not to learn machine language?
+    - machine instructions are barely human-readable
+
+    - they are not *portable*
+
+## High-level to Low-level
+
+![](../images/Picture2.png)
+
+## Interpreter
+
+![](../images/Picture4.png)
+

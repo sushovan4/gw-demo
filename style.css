@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Source+Serif+4&display=swap');
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bree Serif', serif;
+}
+p, div {
+    font-family: 'Source Serif 4', sans-serif!important;
+}
+    
+.exercise, .solution {
+    font-size: 1.1em;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.exercise .theorem-title {
+    font-weight: 600; 
+}
+.sidebar-logo {
+    display: block!important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+.solution {
+    padding: 5px;
+    border-radius: 5px;
+
+    background-color: #eee;
+}
+button {
+    margin-bottom: 5px!important;
+}
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.quote {
+    text-align: right;
+    font-style: italic;
+    padding: 20px;
+}
+
+.quote ::first-letter {
+    font-size: x-large;
+}

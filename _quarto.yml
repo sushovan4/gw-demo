@@ -1,0 +1,60 @@
+project:
+  type: book
+
+  preview: 
+    port: 8080
+
+  
+
+book:
+  favicon: "./images/favicon.png"
+  title: "Machine Learning I"
+  author: "<a href='https://smajhi.com'>Dr. Sushovan Majhi</a>"
+  description: Lecture Notes for DATS-6202
+  chapters:
+    - index.qmd
+    - part: Lecture Notes
+      chapters:
+        - notes/introduction.qmd
+
+
+    - part: Learning Activities
+    - part: Machine Learning Algorithms
+
+    - part: Homework
+      chapters: 
+        - homework/hw-1.qmd
+
+
+
+
+  sidebar: 
+    title: Algorithm Design
+    logo: images/cover.png
+    search: true
+    style: docked
+    
+
+bibliography: references.bib
+
+format:
+  html:
+    number-depth: 2
+    fig-cap-location: margin
+    theme: litera
+    toc: false
+    html-math-method: katex
+    css: style.css
+    number-sections: true
+    title-block-banner: false
+    comments: 
+      hypothesis: true
+    reference-location: margin
+    citation-location: margin
+    highlight-style: github-dark
+    include-in-header:
+      text: |
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+filters:
+  - pseudocode
