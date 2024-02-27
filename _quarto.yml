@@ -1,38 +1,29 @@
 project:
-  type: book
+  type: website
 
   preview: 
     port: 8080
 
-  
-
-book:
+website:
   favicon: "./images/favicon.png"
-  title: "Machine Learning I"
-  author: "<a href='https://smajhi.com'>Dr. Sushovan Majhi</a>"
+  title: "Machine Learning"
   description: Lecture Notes for DATS-6202
-  chapters:
-    - index.qmd
-    - part: Lecture Notes
-      chapters:
-        - notes/introduction.qmd
+  sidebar:
+    style: floating
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://code.com
 
-
-    - part: Learning Activities
-    - part: Machine Learning Algorithms
-
-    - part: Homework
-      chapters: 
-        - homework/hw-1.qmd
-
-
-
-
-  sidebar: 
-    title: Algorithm Design
-    logo: images/cover.png
-    search: true
-    style: docked
+    contents:
+      - section: Lecture Notes
+        contents:
+          - notes/introduction.qmd
+      - section: Jupyter Notebooks
+      - section: Homework
+        contents: 
+          - homework/hw-1.qmd
     
 
 bibliography: references.bib
@@ -42,7 +33,6 @@ format:
     number-depth: 2
     fig-cap-location: margin
     theme: litera
-    toc: false
     html-math-method: katex
     css: style.css
     number-sections: true

@@ -1,78 +1,537 @@
+---
+execute: 
+  echo: false
+citation-location: document
+sidebar: false
+---
+
 :::{.quote}
 "Computers are to computer science what telescopes are to astronomy."    
 – E. Dijkstra
 :::
 
-# Introduction
+# Support Vector Machines (SVM) 
+:::{.callout-important collapse="true"}
+## Learning Objectives
+- Introduction to SVM
 
-## Objectives
+- Motivating Toy Example
 
-- Learn how to solve problems
+- Separating Hyperplanes
 
-- Learn what computer scientists study
+- Hard-margin separation / *Maximum-Margin*
 
-- Understand and analyze some standard algorithms 
+- Soft-margin separation / *Linear SVM*
 
-- Understand the form and function of various data structures
+- Kernel method for SVMs
 
-- Learn how to implement them in Python
+- Application to Digit Classification
+:::
 
-- Learn to write bug-free and efficient code
+:::{.callout-caution collapse="true"}
+## Prerequisites
+- Enthusiasm about ML
+- Basics of matrix operations
+    - <a href="" download>Handout</a> by Marija Stanojcic, UC
+    - My summer course on *Linear Algebra and Discrete Optimization*
 
-- How to write pseudo-code and analyze them on a whiteboard
+- Convex optimization 
+    - Appendix B of @foma
+    - My summer course on *Linear Algebra and Discrete Optimization*
 
-## What is a computer?
+- Time-complexity of algorithms (big-$O$ notation)
+    - Part I of @ita
 
-> A machine that stores and manipulates information under the control of a changeable program.
+- Python programming (pandas, numpy, scikit-learn)
+    - DATS-6103
 
-Can computers do everything?
+:::
 
-> Not everything. Things that need infinite steps are not suitable for computers. For example, computers can not represent (without any approximation) the irrational numbers.
 
-## What is computer science
+As always, we ask the following questions as we encounter a new learning algorithm:
 
-It is not the study of computers!!
+- Classification or regression?
+  - **Classification**---default is **binary**
+- Supervised or unsupervised?
+    - **Supervised**---training data are labeled
+- Parametric or non-parametric?
+    - **Parametric**---it assumes a hypothesis class, namely **hyperplanes**
 
-> "Computers are to computer science what telescopes are to astronomy." -- E. Dijkstra
+## Maximum-Margin Classifier 
 
-- What can be computed?
+### A Motivating Example
+Let us ask the curious question: can we *learn* to predict party affiliation of a US national from their `age` and `years of education`?
 
-- How can something be computed? 
+- Number of features: $n=2$.
 
-    > a recipe of computing something is called an **algorithm**
+- Feature space: $\mathcal{X}$ is a subset of $\mathbb{R}^2$.
 
-- Making computations more efficient
+- Target space: $\mathcal{Y}=${`RED`, `BLUE`}. 
 
-## Hardware
+```{ojs}
+//| panel: fill
+draw(
+  data1.map((d) => ({ x: d.x, y: d.y, z: d.z })),
+  {
+    x: "x",
+    y: "y",
+    xdomain: [-6, 6],
+    ydomain: [-6, 6]
+  }
+);
+```
 
-![](../images/Picture1.png)
+```{ojs}
+//| panel: sidebar
+viewof margin = Inputs.range([0, 5], {
+  value: 0,
+  step: 0.01,
+  label: "Margin"
+});
+viewof showLine = Inputs.toggle({ value: false, label: "Show line" });
+viewof showRegions = Inputs.toggle({ value: false, label: "Classified regions" });
+```
 
-## Programming Languages
+In the demo, we are trying to:
 
-- Why do we need another language for speaking to computers??
-    > our languages are not **precise**
+1. separate the separate our training labelled examples by a **line** (more generally a **hyperplane**).
 
-- Computer semantics, on the other hand, are very precise
+2. once we have *learned* a separating hyperplane, an unseen **test**
+point can be classified based on which side of the hyperplane the point
+is.
 
-- Coding the process of writing an algorithm in a programming language
+:::{.callout-tip}
+## Summary
+In summary, the SVM tries to learn from a sample a **linear decision boundary** that *fully* separates the training data---when possible.
+:::
 
-## Do computers really understand a programming language?
+### Pros
+- Very intuitive
+- Efficient algorithms are available
+  - Linear Programming Problem 
+  - Perceptron [@rosenblatt1958perceptron]
+- Easily generalized to a higher-dimensional feature space
+  - decision boundary: line ($n=2$), plane ($n=3$), **hyperplane** ($n\geq3$)
 
-> **No!!**
+### Cons
+- There are infinitely many separating hyperplanes
+  - **maximum-margin**
 
-- Computer hardware can only understand a very *low-level* language, known as
-**machine language**
+- The data may not be always linearly separable
+  - **soft-margin**
+  - **Kernel methods**
 
-- Why not to learn machine language?
-    - machine instructions are barely human-readable
+## Separable Case (Hard-Margin)
 
-    - they are not *portable*
+### Mathematical Formulation
 
-## High-level to Low-level
+**Training Sample:** $S=\{(\pmb{x_1},y_1),\ldots,(\pmb{x_m},y_m)\}$
 
-![](../images/Picture2.png)
+- each $\pmb{x_i}$ is an $n\times 1$ feature vector
 
-## Interpreter
+- size $m$
 
-![](../images/Picture4.png)
+- I.I.D.
 
+- $\pmb{x}=(x_1,\ldots,x_n)$ is a vector in $\mathbb{R}^n$
+
+- $y\in\{-1, +1\}$
+
+**Objective:**
+Look for a hyperplane $\pmb{w}\cdot\pmb{x}+b=0$ with the normal vector $\pmb{w}$ such that
+
+- all sample points are on the correct side of the hyperplane, i.e.,
+$$y_i(\pmb{\pmb{w}\cdot\pmb{x_i}}+b)\geq0\text{ for all }i\in[m]$$
+
+- the margin (distance to the closed sample point) 
+$$\rho=\min_{i\in[m]}\frac{|\pmb{w}\cdot\pmb{x_i}+b|}{\|\pmb{w}\|}$$
+is maximum
+
+![The hyperplane](../images/hyperplane.PNG){width=500}
+
+### The Solution
+The good news is a **unique** solution hyperplane exists---so long as the
+sample points are linearly separable.
+
+In that case, the solution $\pmb{w}^*$ is a **linear combination** of the training set vectors:
+$$
+\pmb{w^*}=\alpha_1\pmb{x_1}+\ldots+\alpha_m\pmb{x_m}.
+$$
+If the $i$-th training vector appears in the above linear combination (i.e., $\alpha_i\neq0$), then it's called a **support vector**.
+Moreover, for any such support vector:
+$$
+b^*=y_i-\sum_{j=1}^m\alpha_j y_j (\pmb{x}_j\cdot\pmb{x_i}).
+$$
+
+For a test data point with feature vector $\pmb{x}$, we classify using the following rule:
+$$
+\pmb{x}\mapsto\text{sign}(\pmb{w^*}\cdot\pmb{x}+b^*)
+=\text{sgn}\left(\sum_{i=1}^m\alpha_iy_i\langle\pmb{x_i},\pmb{x}\rangle+b^*\right).
+$$
+
+:::{.callout-important collapse="true"}
+## Solving the Optimization Problem
+The *primal* problem is to find a hyperplane (given by the normal vector $\pmb{w}\in\mathbb{R}^n$ and $b\in\mathbb{R}$) so that
+$$
+\min_{\pmb{w},b}\frac{1}{2}\|\pmb{w}\|^2
+$$
+subject to:
+$$y_i(\pmb{w}\cdot\pmb{x_i}+b)\geq1\text{ for all }i\in[m]$$
+This is a *convex optimization* problem with a unique solution. 
+
+However, in order to get the optimal solution, we consider the dual problem. For more details @foma.
+:::
+
+:::{.callout-tip collapse="false"}
+
+<iframe src="https://trinket.io/embed/python3/3c76c21357?toggleCode=true" width="100%" height="500" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+
+:::
+
+## Non-Separable Case (Soft-Margin)
+In real applications, the sample points are **not** separable. In that case,
+we allow for exceptions. 
+
+We would not mind a few exceptional sample points lying inside the maximum margin or even on the wrong side of the margin.
+However, the less number of exceptions, the better. 
+
+We toss a hyper-parameter $C\geq0$ (known as the regularization parameter) in to our optimization. 
+
+:::{.callout-important collapse="true"}
+## Solving with Slack Variables
+The *primal* problem is to find a hyperplane (given by the normal vector $\pmb{w}\in\mathbb{R}^n$ and $b\in\mathbb{R}$) so that
+$$
+\min_{\pmb{w},b,\pmb{\xi}}\frac{1}{2}\|\pmb{w}\|^2 + C\sum_{i=1}^m\xi^2_i
+$$
+subject to:
+$$y_i(\pmb{w}\cdot\pmb{x_i}+b)\geq1-\xi_i\text{ for all }i\in[m]$$
+Here, the $\pmb{\xi}=(\xi_1,\ldots,\xi_m)$ is called the slack.
+
+This is a also *convex optimization* problem with a unique solution. 
+
+However, in order to get the optimal solution, we consider the dual problem. For more details [@foma, Chapter 5].
+:::
+
+Consequently the objective of the optimization becomes two-fold:
+
+- maximize the margin
+
+- limit the total amount of slack.
+
+:::{.callout-tip}
+## About the $C$
+The regularization parameter $C$ controls the width of the margin. The smaller $C$ gets, the wider the margin becomes. 
+
+Some of the common choices are $0.001$, $0.01$, $0.1$, $1.0$, $100$, etc. 
+:::
+
+:::{.callout-tip collapse="false"}
+
+<iframe src="https://trinket.io/embed/python3/3c76c21357?toggleCode=true" width="100%" height="500" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+
+:::
+
+## Kernel Method
+
+## Multi-class Classification
+
+
+## Appendix
+
+```{ojs}
+pivots = Object({ x1: 2, y1: 2, x2: 4, y2: 4 });
+compute_c = function (points) {
+  return points.y1 - compute_m(points) * points.x1;
+}
+compute_m = function (points) {
+  return (points.y1 - points.y2) / (points.x1 - points.x2);
+}
+update = function (svg, X, Y, zrange, strech, sep) {
+  const xdomain = X.domain();
+  const ydomain = Y.domain();
+  const m = compute_m(pivots);
+  const c = compute_c(pivots);
+
+  svg
+    .select("#line")
+    .attr("stroke", sep ? "black" : "lightgray")
+    .attr(
+      "x1",
+      m * xdomain[0] + c >= ydomain[0] ? X(xdomain[0]) : X((ydomain[0] - c) / m)
+    )
+    .attr(
+      "y1",
+      m * xdomain[0] + c >= ydomain[0] ? Y(m * xdomain[0] + c) : Y(ydomain[0])
+    )
+    .attr(
+      "x2",
+      m * xdomain[1] + c >= ydomain[0] ? X(xdomain[1]) : X((ydomain[0] - c) / m)
+    )
+    .attr(
+      "y2",
+      m * xdomain[1] + c >= ydomain[0] ? Y(m * xdomain[1] + c) : Y(ydomain[0])
+    );
+
+  svg
+    .select("#R1")
+    .attr(
+      "points",
+      [
+        [X(xdomain[0]), Y(m * xdomain[0] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c + strech)],
+        [X(xdomain[0]), Y(m * xdomain[0] + c + strech)]
+      ].join(",")
+    )
+    .style("fill", zrange[0])
+    .style("opacity", 0.1);
+  svg
+    .select("#R2")
+    .attr(
+      "points",
+      [
+        [X(xdomain[0]), Y(m * xdomain[0] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c - strech)],
+        [X(xdomain[0]), Y(m * xdomain[0] + c - strech)]
+      ].join(",")
+    )
+    .style("fill", zrange[1])
+    .style("opacity", 0.1);
+
+  svg
+    .select("#M1")
+    .attr(
+      "points",
+      [
+        [X(xdomain[0]), Y(m * xdomain[0] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c + margin * Math.sqrt(1 + m * m))],
+        [X(xdomain[0]), Y(m * xdomain[0] + c + margin * Math.sqrt(1 + m * m))]
+      ].join(",")
+    )
+    .style("fill", zrange[0])
+    .style("opacity", 0.3);
+
+  svg
+    .select("#M2")
+    .attr(
+      "points",
+      [
+        [X(xdomain[0]), Y(m * xdomain[0] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c)],
+        [X(xdomain[1]), Y(m * xdomain[1] + c - margin * Math.sqrt(1 + m * m))],
+        [X(xdomain[0]), Y(m * xdomain[0] + c - margin * Math.sqrt(1 + m * m))]
+      ].join(",")
+    )
+    .style("fill", zrange[1])
+    .style("opacity", 0.3);
+}
+separates = function (data, x, y, z) {
+  const m = compute_m(pivots);
+  const c = compute_c(pivots);
+  if (data[0][y] > m * data[0][x] + c)
+    return data.every(
+      (d) =>
+        (d[z] == data[0][z] && d[y] > m * d[x] + c) ||
+        (d[z] != data[0][z] && d[y] < m * d[x] + c)
+    );
+  else if (data[0][y] < m * data[0][x] + c)
+    return data.every(
+      (d) =>
+        (d[z] == data[0][z] && d[y] < m * d[x] + c) ||
+        (d[z] != data[0][z] && d[y] > m * d[x] + c)
+    );
+  else return false;
+}
+draw = function (data, args = {}) {
+  // Declare the chart dimensions and margins.
+  const width = args.width || 500;
+  const height = args.width || 400;
+  const marginTop = args.marginTop || 5;
+  const marginRight = args.marginRight || 20;
+  const marginBottom = args.marginBottom || 50;
+  const marginLeft = args.marginLeft || 40;
+  const x = args.x || "x";
+  const y = args.y || "y";
+  const z = args.z || "z";
+  const xdomain = args.xdomain || [0, d3.max(data, (d) => d[x])];
+  const ydomain = args.ydomain || [0, d3.max(data, (d) => d[y])];
+  const zdomain = args.zdomain || [0, 1];
+  const zrange = args.zrange || ["red", "blue"];
+  const m = compute_m(pivots);
+  const c = compute_c(pivots);
+
+  // Declare the x (horizontal position) scale.
+  const X = d3
+    .scaleLinear()
+    .domain(xdomain)
+    .range([marginLeft, width - marginRight]);
+
+  // Declare the y (vertical position) scale.
+  const Y = d3
+    .scaleLinear()
+    .domain(ydomain)
+    .range([height - marginBottom, marginTop]);
+
+  // Declare the fill axis
+  const Z = d3.scaleOrdinal().domain(zdomain).range(zrange);
+
+  // Create the SVG container.
+  const svg = d3.create("svg").attr("width", width).attr("height", height);
+
+  // Add the x-axis.
+  svg
+    .append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(X));
+  svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width - 50)
+    .attr("y", height - 20 )
+    .text("X_1: age →");
+  svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y",  13)
+    .attr("x", -20)
+    .text("X_2: education (yrs) →")
+
+  // Add the y-axis.
+  svg
+    .append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(d3.axisLeft(Y));
+
+  const regions = svg.append("g").attr("id", "regions");
+  regions.append("polygon").attr("id", "R1");
+  regions.append("polygon").attr("id", "R2");
+
+  // Add the dots
+  svg
+    .append("g")
+    .selectAll("dot")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", (d) => X(d[x]))
+    .attr("cy", (d) => Y(d[y]))
+    .attr("r", 3)
+    .style("fill", (d) => Z(d[z]));
+
+  // Show Margins
+  svg.append("g").attr("id", "margins");
+  regions.append("polygon").attr("id", "M1");
+  regions.append("polygon").attr("id", "M2");
+
+  // Add the line
+  const line = svg.append("g");
+
+  line
+    .append("line")
+    .attr("id", "line")
+    .attr("stroke-width", 3)
+    .attr("path-length", 10);
+
+  update(svg, X, Y, zrange, Math.max(width, height), separates(data, x, y, z));
+
+  // Draw the pivot points
+  line
+    .append("circle")
+    .attr("cx", X(pivots.x1))
+    .attr("cy", Y(pivots.y1))
+    .attr("r", 7)
+    .style("fill", "white")
+    .style("stroke", "lightgrey")
+    .style("stroke-width", 3)
+    .call(
+      d3.drag().on("drag", function (event, d) {
+        pivots.x1 = X.invert(event.x);
+        pivots.y1 = Y.invert(event.y);
+
+        d3.select(this).attr("cx", X(pivots.x1)).attr("cy", Y(pivots.y1));
+        update(
+          svg,
+          X,
+          Y,
+          zrange,
+          Math.max(width, height),
+          separates(data, x, y, z)
+        );
+      })
+    );
+  line
+    .append("circle")
+    .attr("cx", X(pivots.x2))
+    .attr("cy", Y(pivots.y2))
+    .attr("r", 7)
+    .style("fill", "white")
+    .style("stroke", "lightgrey")
+    .style("stroke-width", 3)
+    .call(
+      d3.drag().on("drag", function (event, d) {
+        pivots.x2 = X.invert(event.x);
+        pivots.y2 = Y.invert(event.y);
+
+        d3.select(this).attr("cx", X(pivots.x2)).attr("cy", Y(pivots.y2));
+        update(
+          svg,
+          X,
+          Y,
+          zrange,
+          Math.max(width, height),
+          separates(data, x, y, z)
+        );
+      })
+    );
+
+  // Draw regions
+  if (showRegions) {
+    regions.attr("visibility", "visible");
+    regions.attr("visibility", "visible");
+  } else {
+    regions.attr("visibility", "hidden");
+    regions.attr("visibility", "hidden");
+  }
+
+  // Draw line
+  if (showLine) {
+    line.attr("visibility", "visible");
+    line.attr("visibility", "visible");
+  } else {
+    line.attr("visibility", "hidden");
+    line.attr("visibility", "hidden");
+  }
+
+  // Return the SVG element.
+  return svg.node();
+}
+generateData = function (min = -1, max = 1, n = 10, method = "linear") {
+  const rand = d3.randomUniform(min, max);
+  const pivots = {
+    x1: rand(),
+    x2: rand(),
+    y1: rand(),
+    y2: rand()
+  };
+  const a = d3.randomUniform(0, 0.3)();
+  const b = d3.randomUniform(0, 0.3)();
+
+  return d3.range(n).map((d) => {
+    const x = rand();
+    const y = rand();
+    let z;
+    if (method == "linear")
+      z = y - compute_m(pivots) * x - compute_c(pivots) > 0 ? 0 : 1;
+    else if (method == "quad") {
+      z = a * x * x + b * y * y - 1 > 0 ? 0 : 1;
+    }
+    return {
+      x: x,
+      y: y,
+      z: z
+    };
+  });
+}
+data1 = generateData(-5, 5, 15, "linear")
+```

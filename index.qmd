@@ -1,63 +1,8 @@
+---
+toc: false
+---
+
 # Welcome {.unnumbered}
 
-![](images/cover.png)
+<iframe width="100%"  src="https://smajhi.com/" title="Webpage example"></iframe>
 
-A copy of the syllabus can be found [Sec 10](syllabus/DATS6001-10.pdf) and [Sec 11](syllabus/DATS6001-11.pdf).
-
-## Who is the instructor?
-Name: [Dr. Sushovan Majhi](https://www.smajhi.com)
-
-Email: [s.majhi@gwu.edu](mailto://s.majhi@gwu.edu)
-
-## What does a data scientist look like?
-
-**A data scientist looks like you**
-
-- it doesn't matter if you identify as a **woman** or a **man** or **trans** or **non-binary**
-
-- it does not matter what **color** your skin is
-
-- it does not matter what your **sexual orientation** is
-
-## Who are the students?
-
-Each student takes about 20-30 seconds to introduce themselves.
-
-Hints:
-
-- what's your **name**, **pronouns**, etc
-
-- where are you from, undergraduate **major**, etc
-
-- what kind of **work** you are interested in
-
-- your **expectations** from the course
-
-- anything **exciting** happened or about to happen in **2024**
-
-
-## Blackboard
-This is where we submit assignments
-
-- take the students on a tour of our course on Blackboard
-
-- go over the syllabus
-
-## VS Code, Python3
-This is where we code
-
-- make sure the students have them installed
-
-- Jupyter Notebooks
-
-- questions?
-
-## Git, GitHub Desktop
-
-The world of `pull`, `commit`, `push`!
-
-- add yourself to the class repo
-
-- clone the class repo
-
-- questions?
