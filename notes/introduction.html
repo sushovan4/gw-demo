@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Lecture Notes for DATS-6202">
 
-<title>Machine Learning</title>
+<title>Machine Learning - 1&nbsp; Support Vector Machines (SVM)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,6 +85,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../homework/hw-1.html" rel="next">
+<link href="../index.html" rel="prev">
 <link href=".././images/favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -188,20 +191,54 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#maximum-margin-classifier" id="toc-maximum-margin-classifier" class="nav-link active" data-scroll-target="#maximum-margin-classifier"><span class="header-section-number">1.1</span> Maximum-Margin Classifier</a>
+  <ul class="collapse">
+  <li><a href="#a-motivating-example" id="toc-a-motivating-example" class="nav-link" data-scroll-target="#a-motivating-example">A Motivating Example</a></li>
+  <li><a href="#pros" id="toc-pros" class="nav-link" data-scroll-target="#pros">Pros</a></li>
+  <li><a href="#cons" id="toc-cons" class="nav-link" data-scroll-target="#cons">Cons</a></li>
+  </ul></li>
+  <li><a href="#separable-case-hard-margin" id="toc-separable-case-hard-margin" class="nav-link" data-scroll-target="#separable-case-hard-margin"><span class="header-section-number">1.2</span> Separable Case (Hard-Margin)</a>
+  <ul class="collapse">
+  <li><a href="#mathematical-formulation" id="toc-mathematical-formulation" class="nav-link" data-scroll-target="#mathematical-formulation">Mathematical Formulation</a></li>
+  <li><a href="#the-solution" id="toc-the-solution" class="nav-link" data-scroll-target="#the-solution">The Solution</a></li>
+  </ul></li>
+  <li><a href="#non-separable-case-soft-margin" id="toc-non-separable-case-soft-margin" class="nav-link" data-scroll-target="#non-separable-case-soft-margin"><span class="header-section-number">1.3</span> Non-Separable Case (Soft-Margin)</a></li>
+  <li><a href="#kernel-method" id="toc-kernel-method" class="nav-link" data-scroll-target="#kernel-method"><span class="header-section-number">1.4</span> Kernel Method</a></li>
+  <li><a href="#multi-class-classification" id="toc-multi-class-classification" class="nav-link" data-scroll-target="#multi-class-classification"><span class="header-section-number">1.5</span> Multi-class Classification</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix"><span class="header-section-number">1.6</span> Appendix</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/introduction.html">Supervised</a></li><li class="breadcrumb-item"><a href="../notes/introduction.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Support Vector Machines (SVM)</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Support Vector Machines (SVM)</span></h1>
+</div>
 
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 <div class="quote">
 <p>“Computers are to computer science what telescopes are to astronomy.”<br>
 – E. Dijkstra</p>
 </div>
-<section id="support-vector-machines-svm" class="level1 page-columns page-full" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Support Vector Machines (SVM)</h1>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -887,11 +924,7 @@ Tip
 </div>
 
 
-
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-ita" class="csl-entry" role="listitem">
 Cormen, Thomas H., Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. <em>Introduction to Algorithms, Third Edition</em>. 3rd ed. The MIT Press.
 </div>
@@ -901,7 +934,10 @@ Mohri, Mehryar, Afshin Rostamizadeh, and Ameet Talwalkar. 2018. <em>Foundations 
 <div id="ref-rosenblatt1958perceptron" class="csl-entry" role="listitem">
 Rosenblatt, F. 1958. <span>“<span class="nocase">The perceptron: A probabilistic model for information storage and organization in the brain.</span>”</span> <em>Psychological Review</em> 65 (6): 386–408. <a href="https://doi.org/10.1037/h0042519">https://doi.org/10.1037/h0042519</a>.
 </div>
-</div></section></div></main> <!-- /main -->
+</div>
+</section>
+
+</main> <!-- /main -->
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRyYXcoXG4gIGRhdGExLm1hcCgoZCkgPT4gKHsgeDogZC54LCB5OiBkLnksIHo6IGQueiB9KSksXG4gIHtcbiAgICB4OiBcInhcIixcbiAgICB5OiBcInlcIixcbiAgICB4ZG9tYWluOiBbLTYsIDZdLFxuICAgIHlkb21haW46IFstNiwgNl1cbiAgfVxuKTtcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBtYXJnaW4gPSBJbnB1dHMucmFuZ2UoWzAsIDVdLCB7XG4gIHZhbHVlOiAwLFxuICBzdGVwOiAwLjAxLFxuICBsYWJlbDogXCJNYXJnaW5cIlxufSk7XG52aWV3b2Ygc2hvd0xpbmUgPSBJbnB1dHMudG9nZ2xlKHsgdmFsdWU6IGZhbHNlLCBsYWJlbDogXCJTaG93IGxpbmVcIiB9KTtcbnZpZXdvZiBzaG93UmVnaW9ucyA9IElucHV0cy50b2dnbGUoeyB2YWx1ZTogZmFsc2UsIGxhYmVsOiBcIkNsYXNzaWZpZWQgcmVnaW9uc1wiIH0pO1xuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0zIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoicGl2b3RzID0gT2JqZWN0KHsgeDE6IDIsIHkxOiAyLCB4MjogNCwgeTI6IDQgfSk7XG5jb21wdXRlX2MgPSBmdW5jdGlvbiAocG9pbnRzKSB7XG4gIHJldHVybiBwb2ludHMueTEgLSBjb21wdXRlX20ocG9pbnRzKSAqIHBvaW50cy54MTtcbn1cbmNvbXB1dGVfbSA9IGZ1bmN0aW9uIChwb2ludHMpIHtcbiAgcmV0dXJuIChwb2ludHMueTEgLSBwb2ludHMueTIpIC8gKHBvaW50cy54MSAtIHBvaW50cy54Mik7XG59XG51cGRhdGUgPSBmdW5jdGlvbiAoc3ZnLCBYLCBZLCB6cmFuZ2UsIHN0cmVjaCwgc2VwKSB7XG4gIGNvbnN0IHhkb21haW4gPSBYLmRvbWFpbigpO1xuICBjb25zdCB5ZG9tYWluID0gWS5kb21haW4oKTtcbiAgY29uc3QgbSA9IGNvbXB1dGVfbShwaXZvdHMpO1xuICBjb25zdCBjID0gY29tcHV0ZV9jKHBpdm90cyk7XG5cbiAgc3ZnXG4gICAgLnNlbGVjdChcIiNsaW5lXCIpXG4gICAgLmF0dHIoXCJzdHJva2VcIiwgc2VwID8gXCJibGFja1wiIDogXCJsaWdodGdyYXlcIilcbiAgICAuYXR0cihcbiAgICAgIFwieDFcIixcbiAgICAgIG0gKiB4ZG9tYWluWzBdICsgYyA+PSB5ZG9tYWluWzBdID8gWCh4ZG9tYWluWzBdKSA6IFgoKHlkb21haW5bMF0gLSBjKSAvIG0pXG4gICAgKVxuICAgIC5hdHRyKFxuICAgICAgXCJ5MVwiLFxuICAgICAgbSAqIHhkb21haW5bMF0gKyBjID49IHlkb21haW5bMF0gPyBZKG0gKiB4ZG9tYWluWzBdICsgYykgOiBZKHlkb21haW5bMF0pXG4gICAgKVxuICAgIC5hdHRyKFxuICAgICAgXCJ4MlwiLFxuICAgICAgbSAqIHhkb21haW5bMV0gKyBjID49IHlkb21haW5bMF0gPyBYKHhkb21haW5bMV0pIDogWCgoeWRvbWFpblswXSAtIGMpIC8gbSlcbiAgICApXG4gICAgLmF0dHIoXG4gICAgICBcInkyXCIsXG4gICAgICBtICogeGRvbWFpblsxXSArIGMgPj0geWRvbWFpblswXSA/IFkobSAqIHhkb21haW5bMV0gKyBjKSA6IFkoeWRvbWFpblswXSlcbiAgICApO1xuXG4gIHN2Z1xuICAgIC5zZWxlY3QoXCIjUjFcIilcbiAgICAuYXR0cihcbiAgICAgIFwicG9pbnRzXCIsXG4gICAgICBbXG4gICAgICAgIFtYKHhkb21haW5bMF0pLCBZKG0gKiB4ZG9tYWluWzBdICsgYyldLFxuICAgICAgICBbWCh4ZG9tYWluWzFdKSwgWShtICogeGRvbWFpblsxXSArIGMpXSxcbiAgICAgICAgW1goeGRvbWFpblsxXSksIFkobSAqIHhkb21haW5bMV0gKyBjICsgc3RyZWNoKV0sXG4gICAgICAgIFtYKHhkb21haW5bMF0pLCBZKG0gKiB4ZG9tYWluWzBdICsgYyArIHN0cmVjaCldXG4gICAgICBdLmpvaW4oXCIsXCIpXG4gICAgKVxuICAgIC5zdHlsZShcImZpbGxcIiwgenJhbmdlWzBdKVxuICAgIC5zdHlsZShcIm9wYWNpdHlcIiwgMC4xKTtcbiAgc3ZnXG4gICAgLnNlbGVjdChcIiNSMlwiKVxuICAgIC5hdHRyKFxuICAgICAgXCJwb2ludHNcIixcbiAgICAgIFtcbiAgICAgICAgW1goeGRvbWFpblswXSksIFkobSAqIHhkb21haW5bMF0gKyBjKV0sXG4gICAgICAgIFtYKHhkb21haW5bMV0pLCBZKG0gKiB4ZG9tYWluWzFdICsgYyldLFxuICAgICAgICBbWCh4ZG9tYWluWzFdKSwgWShtICogeGRvbWFpblsxXSArIGMgLSBzdHJlY2gpXSxcbiAgICAgICAgW1goeGRvbWFpblswXSksIFkobSAqIHhkb21haW5bMF0gKyBjIC0gc3RyZWNoKV1cbiAgICAgIF0uam9pbihcIixcIilcbiAgICApXG4gICAgLnN0eWxlKFwiZmlsbFwiLCB6cmFuZ2VbMV0pXG4gICAgLnN0eWxlKFwib3BhY2l0eVwiLCAwLjEpO1xuXG4gIHN2Z1xuICAgIC5zZWxlY3QoXCIjTTFcIilcbiAgICAuYXR0cihcbiAgICAgIFwicG9pbnRzXCIsXG4gICAgICBbXG4gICAgICAgIFtYKHhkb21haW5bMF0pLCBZKG0gKiB4ZG9tYWluWzBdICsgYyldLFxuICAgICAgICBbWCh4ZG9tYWluWzFdKSwgWShtICogeGRvbWFpblsxXSArIGMpXSxcbiAgICAgICAgW1goeGRvbWFpblsxXSksIFkobSAqIHhkb21haW5bMV0gKyBjICsgbWFyZ2luICogTWF0aC5zcXJ0KDEgKyBtICogbSkpXSxcbiAgICAgICAgW1goeGRvbWFpblswXSksIFkobSAqIHhkb21haW5bMF0gKyBjICsgbWFyZ2luICogTWF0aC5zcXJ0KDEgKyBtICogbSkpXVxuICAgICAgXS5qb2luKFwiLFwiKVxuICAgIClcbiAgICAuc3R5bGUoXCJmaWxsXCIsIHpyYW5nZVswXSlcbiAgICAuc3R5bGUoXCJvcGFjaXR5XCIsIDAuMyk7XG5cbiAgc3ZnXG4gICAgLnNlbGVjdChcIiNNMlwiKVxuICAgIC5hdHRyKFxuICAgICAgXCJwb2ludHNcIixcbiAgICAgIFtcbiAgICAgICAgW1goeGRvbWFpblswXSksIFkobSAqIHhkb21haW5bMF0gKyBjKV0sXG4gICAgICAgIFtYKHhkb21haW5bMV0pLCBZKG0gKiB4ZG9tYWluWzFdICsgYyldLFxuICAgICAgICBbWCh4ZG9tYWluWzFdKSwgWShtICogeGRvbWFpblsxXSArIGMgLSBtYXJnaW4gKiBNYXRoLnNxcnQoMSArIG0gKiBtKSldLFxuICAgICAgICBbWCh4ZG9tYWluWzBdKSwgWShtICogeGRvbWFpblswXSArIGMgLSBtYXJnaW4gKiBNYXRoLnNxcnQoMSArIG0gKiBtKSldXG4gICAgICBdLmpvaW4oXCIsXCIpXG4gICAgKVxuICAgIC5zdHlsZShcImZpbGxcIiwgenJhbmdlWzFdKVxuICAgIC5zdHlsZShcIm9wYWNpdHlcIiwgMC4zKTtcbn1cbnNlcGFyYXRlcyA9IGZ1bmN0aW9uIChkYXRhLCB4LCB5LCB6KSB7XG4gIGNvbnN0IG0gPSBjb21wdXRlX20ocGl2b3RzKTtcbiAgY29uc3QgYyA9IGNvbXB1dGVfYyhwaXZvdHMpO1xuICBpZiAoZGF0YVswXVt5XSA+IG0gKiBkYXRhWzBdW3hdICsgYylcbiAgICByZXR1cm4gZGF0YS5ldmVyeShcbiAgICAgIChkKSA9PlxuICAgICAgICAoZFt6XSA9PSBkYXRhWzBdW3pdICYmIGRbeV0gPiBtICogZFt4XSArIGMpIHx8XG4gICAgICAgIChkW3pdICE9IGRhdGFbMF1bel0gJiYgZFt5XSA8IG0gKiBkW3hdICsgYylcbiAgICApO1xuICBlbHNlIGlmIChkYXRhWzBdW3ldIDwgbSAqIGRhdGFbMF1beF0gKyBjKVxuICAgIHJldHVybiBkYXRhLmV2ZXJ5KFxuICAgICAgKGQpID0+XG4gICAgICAgIChkW3pdID09IGRhdGFbMF1bel0gJiYgZFt5XSA8IG0gKiBkW3hdICsgYykgfHxcbiAgICAgICAgKGRbel0gIT0gZGF0YVswXVt6XSAmJiBkW3ldID4gbSAqIGRbeF0gKyBjKVxuICAgICk7XG4gIGVsc2UgcmV0dXJuIGZhbHNlO1xufVxuZHJhdyA9IGZ1bmN0aW9uIChkYXRhLCBhcmdzID0ge30pIHtcbiAgLy8gRGVjbGFyZSB0aGUgY2hhcnQgZGltZW5zaW9ucyBhbmQgbWFyZ2lucy5cbiAgY29uc3Qgd2lkdGggPSBhcmdzLndpZHRoIHx8IDUwMDtcbiAgY29uc3QgaGVpZ2h0ID0gYXJncy53aWR0aCB8fCA0MDA7XG4gIGNvbnN0IG1hcmdpblRvcCA9IGFyZ3MubWFyZ2luVG9wIHx8IDU7XG4gIGNvbnN0IG1hcmdpblJpZ2h0ID0gYXJncy5tYXJnaW5SaWdodCB8fCAyMDtcbiAgY29uc3QgbWFyZ2luQm90dG9tID0gYXJncy5tYXJnaW5Cb3R0b20gfHwgNTA7XG4gIGNvbnN0IG1hcmdpbkxlZnQgPSBhcmdzLm1hcmdpbkxlZnQgfHwgNDA7XG4gIGNvbnN0IHggPSBhcmdzLnggfHwgXCJ4XCI7XG4gIGNvbnN0IHkgPSBhcmdzLnkgfHwgXCJ5XCI7XG4gIGNvbnN0IHogPSBhcmdzLnogfHwgXCJ6XCI7XG4gIGNvbnN0IHhkb21haW4gPSBhcmdzLnhkb21haW4gfHwgWzAsIGQzLm1heChkYXRhLCAoZCkgPT4gZFt4XSldO1xuICBjb25zdCB5ZG9tYWluID0gYXJncy55ZG9tYWluIHx8IFswLCBkMy5tYXgoZGF0YSwgKGQpID0+IGRbeV0pXTtcbiAgY29uc3QgemRvbWFpbiA9IGFyZ3MuemRvbWFpbiB8fCBbMCwgMV07XG4gIGNvbnN0IHpyYW5nZSA9IGFyZ3MuenJhbmdlIHx8IFtcInJlZFwiLCBcImJsdWVcIl07XG4gIGNvbnN0IG0gPSBjb21wdXRlX20ocGl2b3RzKTtcbiAgY29uc3QgYyA9IGNvbXB1dGVfYyhwaXZvdHMpO1xuXG4gIC8vIERlY2xhcmUgdGhlIHggKGhvcml6b250YWwgcG9zaXRpb24pIHNjYWxlLlxuICBjb25zdCBYID0gZDNcbiAgICAuc2NhbGVMaW5lYXIoKVxuICAgIC5kb21haW4oeGRvbWFpbilcbiAgICAucmFuZ2UoW21hcmdpbkxlZnQsIHdpZHRoIC0gbWFyZ2luUmlnaHRdKTtcblxuICAvLyBEZWNsYXJlIHRoZSB5ICh2ZXJ0aWNhbCBwb3NpdGlvbikgc2NhbGUuXG4gIGNvbnN0IFkgPSBkM1xuICAgIC5zY2FsZUxpbmVhcigpXG4gICAgLmRvbWFpbih5ZG9tYWluKVxuICAgIC5yYW5nZShbaGVpZ2h0IC0gbWFyZ2luQm90dG9tLCBtYXJnaW5Ub3BdKTtcblxuICAvLyBEZWNsYXJlIHRoZSBmaWxsIGF4aXNcbiAgY29uc3QgWiA9IGQzLnNjYWxlT3JkaW5hbCgpLmRvbWFpbih6ZG9tYWluKS5yYW5nZSh6cmFuZ2UpO1xuXG4gIC8vIENyZWF0ZSB0aGUgU1ZHIGNvbnRhaW5lci5cbiAgY29uc3Qgc3ZnID0gZDMuY3JlYXRlKFwic3ZnXCIpLmF0dHIoXCJ3aWR0aFwiLCB3aWR0aCkuYXR0cihcImhlaWdodFwiLCBoZWlnaHQpO1xuXG4gIC8vIEFkZCB0aGUgeC1heGlzLlxuICBzdmdcbiAgICAuYXBwZW5kKFwiZ1wiKVxuICAgIC5hdHRyKFwidHJhbnNmb3JtXCIsIGB0cmFuc2xhdGUoMCwke2hlaWdodCAtIG1hcmdpbkJvdHRvbX0pYClcbiAgICAuY2FsbChkMy5heGlzQm90dG9tKFgpKTtcbiAgc3ZnLmFwcGVuZChcInRleHRcIilcbiAgICAuYXR0cihcInRleHQtYW5jaG9yXCIsIFwiZW5kXCIpXG4gICAgLmF0dHIoXCJ4XCIsIHdpZHRoIC0gNTApXG4gICAgLmF0dHIoXCJ5XCIsIGhlaWdodCAtIDIwIClcbiAgICAudGV4dChcIlhfMTogYWdlIOKGklwiKTtcbiAgc3ZnLmFwcGVuZChcInRleHRcIilcbiAgICAuYXR0cihcInRleHQtYW5jaG9yXCIsIFwiZW5kXCIpXG4gICAgLmF0dHIoXCJ0cmFuc2Zvcm1cIiwgXCJyb3RhdGUoLTkwKVwiKVxuICAgIC5hdHRyKFwieVwiLCAgMTMpXG4gICAgLmF0dHIoXCJ4XCIsIC0yMClcbiAgICAudGV4dChcIlhfMjogZWR1Y2F0aW9uICh5cnMpIOKGklwiKVxuXG4gIC8vIEFkZCB0aGUgeS1heGlzLlxuICBzdmdcbiAgICAuYXBwZW5kKFwiZ1wiKVxuICAgIC5hdHRyKFwidHJhbnNmb3JtXCIsIGB0cmFuc2xhdGUoJHttYXJnaW5MZWZ0fSwwKWApXG4gICAgLmNhbGwoZDMuYXhpc0xlZnQoWSkpO1xuXG4gIGNvbnN0IHJlZ2lvbnMgPSBzdmcuYXBwZW5kKFwiZ1wiKS5hdHRyKFwiaWRcIiwgXCJyZWdpb25zXCIpO1xuICByZWdpb25zLmFwcGVuZChcInBvbHlnb25cIikuYXR0cihcImlkXCIsIFwiUjFcIik7XG4gIHJlZ2lvbnMuYXBwZW5kKFwicG9seWdvblwiKS5hdHRyKFwiaWRcIiwgXCJSMlwiKTtcblxuICAvLyBBZGQgdGhlIGRvdHNcbiAgc3ZnXG4gICAgLmFwcGVuZChcImdcIilcbiAgICAuc2VsZWN0QWxsKFwiZG90XCIpXG4gICAgLmRhdGEoZGF0YSlcbiAgICAuZW50ZXIoKVxuICAgIC5hcHBlbmQoXCJjaXJjbGVcIilcbiAgICAuYXR0cihcImN4XCIsIChkKSA9PiBYKGRbeF0pKVxuICAgIC5hdHRyKFwiY3lcIiwgKGQpID0+IFkoZFt5XSkpXG4gICAgLmF0dHIoXCJyXCIsIDMpXG4gICAgLnN0eWxlKFwiZmlsbFwiLCAoZCkgPT4gWihkW3pdKSk7XG5cbiAgLy8gU2hvdyBNYXJnaW5zXG4gIHN2Zy5hcHBlbmQoXCJnXCIpLmF0dHIoXCJpZFwiLCBcIm1hcmdpbnNcIik7XG4gIHJlZ2lvbnMuYXBwZW5kKFwicG9seWdvblwiKS5hdHRyKFwiaWRcIiwgXCJNMVwiKTtcbiAgcmVnaW9ucy5hcHBlbmQoXCJwb2x5Z29uXCIpLmF0dHIoXCJpZFwiLCBcIk0yXCIpO1xuXG4gIC8vIEFkZCB0aGUgbGluZVxuICBjb25zdCBsaW5lID0gc3ZnLmFwcGVuZChcImdcIik7XG5cbiAgbGluZVxuICAgIC5hcHBlbmQoXCJsaW5lXCIpXG4gICAgLmF0dHIoXCJpZFwiLCBcImxpbmVcIilcbiAgICAuYXR0cihcInN0cm9rZS13aWR0aFwiLCAzKVxuICAgIC5hdHRyKFwicGF0aC1sZW5ndGhcIiwgMTApO1xuXG4gIHVwZGF0ZShzdmcsIFgsIFksIHpyYW5nZSwgTWF0aC5tYXgod2lkdGgsIGhlaWdodCksIHNlcGFyYXRlcyhkYXRhLCB4LCB5LCB6KSk7XG5cbiAgLy8gRHJhdyB0aGUgcGl2b3QgcG9pbnRzXG4gIGxpbmVcbiAgICAuYXBwZW5kKFwiY2lyY2xlXCIpXG4gICAgLmF0dHIoXCJjeFwiLCBYKHBpdm90cy54MSkpXG4gICAgLmF0dHIoXCJjeVwiLCBZKHBpdm90cy55MSkpXG4gICAgLmF0dHIoXCJyXCIsIDcpXG4gICAgLnN0eWxlKFwiZmlsbFwiLCBcIndoaXRlXCIpXG4gICAgLnN0eWxlKFwic3Ryb2tlXCIsIFwibGlnaHRncmV5XCIpXG4gICAgLnN0eWxlKFwic3Ryb2tlLXdpZHRoXCIsIDMpXG4gICAgLmNhbGwoXG4gICAgICBkMy5kcmFnKCkub24oXCJkcmFnXCIsIGZ1bmN0aW9uIChldmVudCwgZCkge1xuICAgICAgICBwaXZvdHMueDEgPSBYLmludmVydChldmVudC54KTtcbiAgICAgICAgcGl2b3RzLnkxID0gWS5pbnZlcnQoZXZlbnQueSk7XG5cbiAgICAgICAgZDMuc2VsZWN0KHRoaXMpLmF0dHIoXCJjeFwiLCBYKHBpdm90cy54MSkpLmF0dHIoXCJjeVwiLCBZKHBpdm90cy55MSkpO1xuICAgICAgICB1cGRhdGUoXG4gICAgICAgICAgc3ZnLFxuICAgICAgICAgIFgsXG4gICAgICAgICAgWSxcbiAgICAgICAgICB6cmFuZ2UsXG4gICAgICAgICAgTWF0aC5tYXgod2lkdGgsIGhlaWdodCksXG4gICAgICAgICAgc2VwYXJhdGVzKGRhdGEsIHgsIHksIHopXG4gICAgICAgICk7XG4gICAgICB9KVxuICAgICk7XG4gIGxpbmVcbiAgICAuYXBwZW5kKFwiY2lyY2xlXCIpXG4gICAgLmF0dHIoXCJjeFwiLCBYKHBpdm90cy54MikpXG4gICAgLmF0dHIoXCJjeVwiLCBZKHBpdm90cy55MikpXG4gICAgLmF0dHIoXCJyXCIsIDcpXG4gICAgLnN0eWxlKFwiZmlsbFwiLCBcIndoaXRlXCIpXG4gICAgLnN0eWxlKFwic3Ryb2tlXCIsIFwibGlnaHRncmV5XCIpXG4gICAgLnN0eWxlKFwic3Ryb2tlLXdpZHRoXCIsIDMpXG4gICAgLmNhbGwoXG4gICAgICBkMy5kcmFnKCkub24oXCJkcmFnXCIsIGZ1bmN0aW9uIChldmVudCwgZCkge1xuICAgICAgICBwaXZvdHMueDIgPSBYLmludmVydChldmVudC54KTtcbiAgICAgICAgcGl2b3RzLnkyID0gWS5pbnZlcnQoZXZlbnQueSk7XG5cbiAgICAgICAgZDMuc2VsZWN0KHRoaXMpLmF0dHIoXCJjeFwiLCBYKHBpdm90cy54MikpLmF0dHIoXCJjeVwiLCBZKHBpdm90cy55MikpO1xuICAgICAgICB1cGRhdGUoXG4gICAgICAgICAgc3ZnLFxuICAgICAgICAgIFgsXG4gICAgICAgICAgWSxcbiAgICAgICAgICB6cmFuZ2UsXG4gICAgICAgICAgTWF0aC5tYXgod2lkdGgsIGhlaWdodCksXG4gICAgICAgICAgc2VwYXJhdGVzKGRhdGEsIHgsIHksIHopXG4gICAgICAgICk7XG4gICAgICB9KVxuICAgICk7XG5cbiAgLy8gRHJhdyByZWdpb25zXG4gIGlmIChzaG93UmVnaW9ucykge1xuICAgIHJlZ2lvbnMuYXR0cihcInZpc2liaWxpdHlcIiwgXCJ2aXNpYmxlXCIpO1xuICAgIHJlZ2lvbnMuYXR0cihcInZpc2liaWxpdHlcIiwgXCJ2aXNpYmxlXCIpO1xuICB9IGVsc2Uge1xuICAgIHJlZ2lvbnMuYXR0cihcInZpc2liaWxpdHlcIiwgXCJoaWRkZW5cIik7XG4gICAgcmVnaW9ucy5hdHRyKFwidmlzaWJpbGl0eVwiLCBcImhpZGRlblwiKTtcbiAgfVxuXG4gIC8vIERyYXcgbGluZVxuICBpZiAoc2hvd0xpbmUpIHtcbiAgICBsaW5lLmF0dHIoXCJ2aXNpYmlsaXR5XCIsIFwidmlzaWJsZVwiKTtcbiAgICBsaW5lLmF0dHIoXCJ2aXNpYmlsaXR5XCIsIFwidmlzaWJsZVwiKTtcbiAgfSBlbHNlIHtcbiAgICBsaW5lLmF0dHIoXCJ2aXNpYmlsaXR5XCIsIFwiaGlkZGVuXCIpO1xuICAgIGxpbmUuYXR0cihcInZpc2liaWxpdHlcIiwgXCJoaWRkZW5cIik7XG4gIH1cblxuICAvLyBSZXR1cm4gdGhlIFNWRyBlbGVtZW50LlxuICByZXR1cm4gc3ZnLm5vZGUoKTtcbn1cbmdlbmVyYXRlRGF0YSA9IGZ1bmN0aW9uIChtaW4gPSAtMSwgbWF4ID0gMSwgbiA9IDEwLCBtZXRob2QgPSBcImxpbmVhclwiKSB7XG4gIGNvbnN0IHJhbmQgPSBkMy5yYW5kb21Vbmlmb3JtKG1pbiwgbWF4KTtcbiAgY29uc3QgcGl2b3RzID0ge1xuICAgIHgxOiByYW5kKCksXG4gICAgeDI6IHJhbmQoKSxcbiAgICB5MTogcmFuZCgpLFxuICAgIHkyOiByYW5kKClcbiAgfTtcbiAgY29uc3QgYSA9IGQzLnJhbmRvbVVuaWZvcm0oMCwgMC4zKSgpO1xuICBjb25zdCBiID0gZDMucmFuZG9tVW5pZm9ybSgwLCAwLjMpKCk7XG5cbiAgcmV0dXJuIGQzLnJhbmdlKG4pLm1hcCgoZCkgPT4ge1xuICAgIGNvbnN0IHggPSByYW5kKCk7XG4gICAgY29uc3QgeSA9IHJhbmQoKTtcbiAgICBsZXQgejtcbiAgICBpZiAobWV0aG9kID09IFwibGluZWFyXCIpXG4gICAgICB6ID0geSAtIGNvbXB1dGVfbShwaXZvdHMpICogeCAtIGNvbXB1dGVfYyhwaXZvdHMpID4gMCA/IDAgOiAxO1xuICAgIGVsc2UgaWYgKG1ldGhvZCA9PSBcInF1YWRcIikge1xuICAgICAgeiA9IGEgKiB4ICogeCArIGIgKiB5ICogeSAtIDEgPiAwID8gMCA6IDE7XG4gICAgfVxuICAgIHJldHVybiB7XG4gICAgICB4OiB4LFxuICAgICAgeTogeSxcbiAgICAgIHo6IHpcbiAgICB9O1xuICB9KTtcbn1cbmRhdGExID0gZ2VuZXJhdGVEYXRhKC01LCA1LCAxNSwgXCJsaW5lYXJcIilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoic2hpbnlJbnB1dCgnbWFyZ2luJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3Nob3dMaW5lJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ3Nob3dSZWdpb25zJykifV19
 </script>
@@ -1300,6 +1336,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link  aria-label=" welcome,="" everyone!"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome, Everyone!</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../homework/hw-1.html" class="pagination-link" aria-label="<span class='chapter-number'>2</span>&nbsp; <span class='chapter-title'>hw-1.html</span>">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">hw-1.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js" type="text/javascript"></script>
 <script type="text/javascript">
