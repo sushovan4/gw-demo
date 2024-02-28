@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Source+Serif+4&display=swap');
+.callout-body-container {
+    font-size: inherit!important;
+}
 
+.callout-header {
+    font-size: inherit!important;
+
+}
+
+.exercise
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Bree Serif', serif;
 }
