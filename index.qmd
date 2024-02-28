@@ -2,7 +2,7 @@
 toc: false
 ---
 
-# Welcome, Everyone! {.unnumbered}
+# Welcome {.unnumbered}
 
 ![](images/cover.svg){width=400}
 

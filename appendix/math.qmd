@@ -1,0 +1,121 @@
+# Mathematical Foundations
+
+## Sets
+The following statements are True or False?
+
+:::{#exr-}
+$\mathbb{Q}\subsetneq\mathbb{R}$?
+:::
+
+::: {.solution}
+> True
+
+Note that $A\subsetneq B$ denotes a proper subset. The set of reals $\mathbb{R}$ contains the rationals (e.g. numbers of the form $p/q$ for integers $p,q$) and the irrationals (e.g. the numbers $e,\pi$, etc.).
+:::
+
+:::{#exr-}
+$\mathbb{Z}\subset\mathbb{N}$
+:::
+
+:::{.solution}
+> False
+
+Note that $A\subset B$ denotes a subset, **without the restriction of being proper**. So, $A\subset B$ implies that either $A=B$ or $A$ is a proper subset of $B$. Since $\mathbb{Z}$, the set of integers, has all the naturals ($\mathbb{N}$) and more (e.g. $0,-1,-2$), therefore neither of the above is true.
+:::
+
+:::{#exr-}
+$A\cap\emptyset=\emptyset$
+:::
+
+:::{.solution}
+> True
+:::
+
+:::{#exr-}
+$A\cup B\subsetneq B$
+:::
+
+:::{.solution}
+> False
+:::
+
+:::{#exr-}
+For two finite sets $A$ and $B$, we have $|A\cup B|=|A|+|B|$.
+:::
+
+:::{.solution}
+> False (i.e., not true in general)
+
+To show that the statement is false, we need to pick just one particular example of $A,B$ such that the relation holds false!
+
+We pick $A=\{1, 2, 3\}$ and $B=\{1, 2\}$. 
+:::
+
+:::{#exr-}
+$A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$. Draw to illustrate.
+:::
+:::{.solution}
+> True
+
+This property is known as the **distributive property** of set intersection.
+:::
+
+:::{#exr-}
+$(A\cup B)^c=A^c\cap B^c$. 
+:::
+:::{.solution}
+> True
+
+This formula is known as [**DeMorgan's Law**](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) of set complementation.
+:::
+
+
+:::{#exr-}
+For a finite set $A$, its power set, denoted by $\mathcal{P}(A)$, has $2^{|A|}$ many elements.
+:::
+:::{.solution}
+> True
+:::
+
+## Functions
+
+:::{#exr-}
+Draw the graphs of $\log_{e}(x)$, the natural logarithm function.
+:::
+
+:::{#exr-}
+How is the above graph different from the graph of $\log_{2}(x)$?
+:::
+
+:::{#exr-}
+Draw the graph of $x^2$, $\sqrt{x}$, and $x$ in the same plot.
+:::
+
+:::{#exr-}
+Can you find an $m$ such that the line $y=mx$ stays above the graph of $\sqrt{x}$ for any large positive $x$?
+:::
+
+:::{#exr-}
+Can you find an $m$ such that the line $y=mx$ stays above the graph of $x^2$ for any large positive $x$?
+:::
+
+## Summation Notation, Series
+
+1. Sum of natural numbers: $$\sum_{k=1}^n k=\frac{n(n+1)}{2}.$$ {#eq-series-0}
+
+2. Finite geometric series: $$\sum_{k=0}^n x^k=\frac{x^{n+1}-1}{x-1}.$$ {#eq-series-1}
+
+3. Infinite geometric series for $|x|<1$: $$\sum_{k=0}^\infty x^k=\frac{1}{1-x}.$$ {#eq-series-2}
+
+3. For $|x|<1$: $$\sum_{k=0}^\infty kx^k=\frac{x}{(1-x)^2}.$$ {#eq-series-3}
+
+## Mathematical Induction
+
+:::{#exr-}
+What is mathematical induction?
+:::
+
+
+:::{#exr-}
+Prove the first identity above using mathematical induction.
+:::

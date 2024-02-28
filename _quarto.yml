@@ -13,12 +13,20 @@ book:
     - index.qmd
     - part: Supervised
       chapters:
-        - notes/introduction.qmd
+        - notes/regression.qmd
+        - notes/logit.qmd
+        - notes/svm.qmd
     - part: Unsupervised
     - part: Jupyter Notebooks
     - part: Homework
       chapters: 
         - homework/hw-1.qmd
+
+
+  appendices: 
+    - appendix/math.qmd
+    - appendix/linal.qmd
+  
     
   sidebar: 
     title: Machine Learning
@@ -30,8 +38,9 @@ bibliography: references.bib
     
 format:
   html:
+    page-layout: full
     number-depth: 2
-    fig-cap-location: margin
+    fig-cap-location: bottom
     theme: litera
     html-math-method: katex
     css: style.css
@@ -40,7 +49,7 @@ format:
     comments: 
       hypothesis: true
     reference-location: margin
-    citation-location: margin
+    citation-location: document
     highlight-style: github-dark
     include-in-header:
       text: |

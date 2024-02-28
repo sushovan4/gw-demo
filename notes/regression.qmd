@@ -7,7 +7,7 @@ toc: true
 -- Donald E. Knuth
 :::
 
-# Analysis of Algorithms
+# Linear Regression
 
 
 ## Computational Problems

@@ -1,17 +1,16 @@
 ---
+toc: false
 execute: 
   echo: false
-citation-location: document
-sidebar: false
 ---
 
 :::{.quote}
-"Computers are to computer science what telescopes are to astronomy."    
-– E. Dijkstra
+"A computer would deserve to be called intelligent if it could deceive a human into believing that it was human"    
+– Alan Turing
 :::
 
-# Support Vector Machines (SVM) 
-:::{.callout-important collapse="true"}
+# Support Vector Machines
+:::{.callout-tip}
 ## Learning Objectives
 - Introduction to SVM
 
@@ -28,12 +27,20 @@ sidebar: false
 - Application to Digit Classification
 :::
 
-:::{.callout-caution collapse="true"}
+:::{.callout-important collapse="true"}
 ## Prerequisites
-- Enthusiasm about ML
+**Must-have:** 
+
+- Enthusiasm about ML  
+
 - Basics of matrix operations
-    - <a href="" download>Handout</a> by Marija Stanojcic, UC
-    - My summer course on *Linear Algebra and Discrete Optimization*
+    - [Linear Algebra](../appendix/linal.qmd)
+    - My summer course on *Linear Algebra and Convex Optimization*
+
+- Python (pandas, numpy, scikit-learn)
+    - DATS-6103
+
+**Recommended:**
 
 - Convex optimization 
     - Appendix B of @foma
@@ -42,12 +49,10 @@ sidebar: false
 - Time-complexity of algorithms (big-$O$ notation)
     - Part I of @ita
 
-- Python programming (pandas, numpy, scikit-learn)
-    - DATS-6103
 
 :::
 
-
+## Introduction 
 As always, we ask the following questions as we encounter a new learning algorithm:
 
 - Classification or regression?
@@ -57,9 +62,7 @@ As always, we ask the following questions as we encounter a new learning algorit
 - Parametric or non-parametric?
     - **Parametric**---it assumes a hypothesis class, namely **hyperplanes**
 
-## Maximum-Margin Classifier 
-
-### A Motivating Example
+## A Motivating Example
 Let us ask the curious question: can we *learn* to predict party affiliation of a US national from their `age` and `years of education`?
 
 - Number of features: $n=2$.
@@ -70,39 +73,41 @@ Let us ask the curious question: can we *learn* to predict party affiliation of 
 
 ```{ojs}
 //| panel: fill
+pivots = Object({ x1: 20, y1: 1, x2: 70, y2: 10 });
+data = generateData(18, 80, 0, 15, 20, separable ? "linear" : "quad");
 draw(
-  data1.map((d) => ({ x: d.x, y: d.y, z: d.z })),
+  data.map((d) => ({ x: d.x, y: d.y, z: d.z })),
   {
     x: "x",
     y: "y",
-    xdomain: [-6, 6],
-    ydomain: [-6, 6]
+    xdomain: [18, 80],
+    ydomain: [0, 15]
   }
 );
 ```
 
 ```{ojs}
 //| panel: sidebar
+viewof showLine = Inputs.toggle({ value: false, label: "Show line" });
 viewof margin = Inputs.range([0, 5], {
   value: 0,
   step: 0.01,
   label: "Margin"
 });
-viewof showLine = Inputs.toggle({ value: false, label: "Show line" });
 viewof showRegions = Inputs.toggle({ value: false, label: "Classified regions" });
+viewof separable = Inputs.toggle({ value: true, label: "Separable?" });
 ```
 
 In the demo, we are trying to:
 
-1. separate the separate our training labelled examples by a **line** (more generally a **hyperplane**).
+1. separate the separate our training examples by a **line**.
 
-2. once we have *learned* a separating hyperplane, an unseen **test**
-point can be classified based on which side of the hyperplane the point
+2. once we have *learned* a separating line, an unseen **test** point can be classified based on which side of the hyperplane the point
 is.
 
 :::{.callout-tip}
 ## Summary
-In summary, the SVM tries to learn from a sample a **linear decision boundary** that *fully* separates the training data---when possible.
+In summary, the SVM tries to learn from a sample a **linear decision boundary** that *fully* separates the training data.
 :::
 
 ### Pros
@@ -121,87 +126,98 @@ In summary, the SVM tries to learn from a sample a **linear decision boundary** 
   - **soft-margin**
   - **Kernel methods**
 
-## Separable Case (Hard-Margin)
+## The Separable Case (Hard-Margin)
+Let's assume that the data points are linearly separable.
+Out of the infinitely many separating lines, we find the
+one with the largest **margin**.
 
 ### Mathematical Formulation
+#### Feature Space:
 
-**Training Sample:** $S=\{(\pmb{x_1},y_1),\ldots,(\pmb{x_m},y_m)\}$
+- $\mathcal{X}\subset\mathbb{R}^n$ is an $n$-dimensional space. 
 
-- each $\pmb{x_i}$ is an $n\times 1$ feature vector
+- feature vector $\pmb{x}$ is an $n\times 1$ vector
+
+#### Target Space:
+
+- $\mathcal{Y}=\{-1, 1\}$
+
+#### Training Sample:
 
 - size $m$
 
-- I.I.D.
+- $S=\{(\pmb{x_1},y_1),\ldots,(\pmb{x_m},y_m)\}$
+  - each $x_i\in\mathcal{X}$
+  - each $y_i\in\mathcal{Y}$
 
-- $\pmb{x}=(x_1,\ldots,x_n)$ is a vector in $\mathbb{R}^n$
+- **I.I.D.** (why?)
 
-- $y\in\{-1, +1\}$
+#### Objective
 
-**Objective:**
-Look for a hyperplane $\pmb{w}\cdot\pmb{x}+b=0$ with the normal vector $\pmb{w}$ such that
+- Find a hyperplane 
+$$\pmb{w}\cdot\pmb{x}+b=0$$ 
+such that 
 
 - all sample points are on the correct side of the hyperplane, i.e.,
-$$y_i(\pmb{\pmb{w}\cdot\pmb{x_i}}+b)\geq0\text{ for all }i\in[m]$$
+$$y_i(\pmb{\pmb{w}\cdot\pmb{x_i}}+b)\geq0\text{ for all }i\in[1,m]$$
 
 - the margin (distance to the closed sample point) 
-$$\rho=\min_{i\in[m]}\frac{|\pmb{w}\cdot\pmb{x_i}+b|}{\|\pmb{w}\|}$$
+$$\rho=\min_{i\in[1, m]}\frac{|\pmb{w}\cdot\pmb{x_i}+b|}{\|\pmb{w}\|}$$
 is maximum
 
-![The hyperplane](../images/hyperplane.PNG){width=500}
+![](../images/hyperplane.PNG){width=500}
 
-### The Solution
-The good news is a **unique** solution hyperplane exists---so long as the
-sample points are linearly separable.
+The good news is a **unique** solution hyperplane exists---so long as the sample points are linearly separable.
 
-In that case, the solution $\pmb{w}^*$ is a **linear combination** of the training set vectors:
-$$
-\pmb{w^*}=\alpha_1\pmb{x_1}+\ldots+\alpha_m\pmb{x_m}.
-$$
-If the $i$-th training vector appears in the above linear combination (i.e., $\alpha_i\neq0$), then it's called a **support vector**.
-Moreover, for any such support vector:
-$$
-b^*=y_i-\sum_{j=1}^m\alpha_j y_j (\pmb{x}_j\cdot\pmb{x_i}).
-$$
-
-For a test data point with feature vector $\pmb{x}$, we classify using the following rule:
-$$
-\pmb{x}\mapsto\text{sign}(\pmb{w^*}\cdot\pmb{x}+b^*)
-=\text{sgn}\left(\sum_{i=1}^m\alpha_iy_i\langle\pmb{x_i},\pmb{x}\rangle+b^*\right).
-$$
 
 :::{.callout-important collapse="true"}
 ## Solving the Optimization Problem
-The *primal* problem is to find a hyperplane (given by the normal vector $\pmb{w}\in\mathbb{R}^n$ and $b\in\mathbb{R}$) so that
+The *primal* problem can be stated as
 $$
 \min_{\pmb{w},b}\frac{1}{2}\|\pmb{w}\|^2
 $$
 subject to:
-$$y_i(\pmb{w}\cdot\pmb{x_i}+b)\geq1\text{ for all }i\in[m]$$
-This is a *convex optimization* problem with a unique solution. 
+$$y_i(\pmb{w}\cdot\pmb{x_i}+b)\geq1\text{ for all }i\in[1,m]$$
+This is a *convex optimization* problem with a unique solution $(\pmb{w}^*,b*)$. 
 
-However, in order to get the optimal solution, we consider the dual problem. For more details @foma.
+Hence, the problem can be solved using [**quadratic programming**](https://en.wikipedia.org/wiki/Quadratic_programming) (QP).
+
+Moreover, the normal vector $\pmb{w}^*$ is a **linear combination** of the training feature vectors:
+$$
+\pmb{w^*}=\alpha_1\pmb{x_1}+\ldots+\alpha_m\pmb{x_m}.
+$$
+If the $i$-th training vector appears in the above linear combination (i.e., $\alpha_i\neq0$), then it's called a **support vector**.
 :::
 
-:::{.callout-tip collapse="false"}
+:::{.callout-tip}
+## Decision Rule
+For an unseen test data-point with feature vector $\pmb{x}$, we classify using the following rule:
+$$
+\pmb{x}\mapsto\text{sign}(\pmb{w}^*\cdot\pmb{x}+b^*)
+=\text{sgn}\left(\sum_{i=1}^m\alpha_iy_i\pmb{x_i}\cdot\pmb{x}+b^*\right).
+$$
+:::
 
-<iframe src="https://trinket.io/embed/python3/3c76c21357?toggleCode=true" width="100%" height="500" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+:::{.callout-tip collapse="true"}
+## Code
+<iframe src="https://trinket.io/embed/python3/3c76c21357?toggleCode=true" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
 
 :::
 
-## Non-Separable Case (Soft-Margin)
-In real applications, the sample points are **not** separable. In that case,
-we allow for exceptions. 
 
-We would not mind a few exceptional sample points lying inside the maximum margin or even on the wrong side of the margin.
+## The Non-Separable Case (Soft-Margin)
+In real applications, the sample points are **never separable**. In that case, we allow for exceptions. 
+
+We would not mind a few *exceptional* sample points lying inside the maximum margin or even on the wrong side of the margin.
 However, the less number of exceptions, the better. 
 
-We toss a hyper-parameter $C\geq0$ (known as the regularization parameter) in to our optimization. 
+We toss a hyper-parameter $C\geq0$ (known as the **regularization parameter**) in to our optimization. 
 
 :::{.callout-important collapse="true"}
 ## Solving with Slack Variables
 The *primal* problem is to find a hyperplane (given by the normal vector $\pmb{w}\in\mathbb{R}^n$ and $b\in\mathbb{R}$) so that
 $$
-\min_{\pmb{w},b,\pmb{\xi}}\frac{1}{2}\|\pmb{w}\|^2 + C\sum_{i=1}^m\xi^2_i
+\min_{\pmb{w},b,\pmb{\xi}}\left(\frac{1}{2}\|\pmb{w}\|^2 + C\sum_{i=1}^m\xi^2_i\right)
 $$
 subject to:
 $$y_i(\pmb{w}\cdot\pmb{x_i}+b)\geq1-\xi_i\text{ for all }i\in[m]$$
@@ -218,28 +234,60 @@ Consequently the objective of the optimization becomes two-fold:
 
 - limit the total amount of slack.
 
-:::{.callout-tip}
-## About the $C$
-The regularization parameter $C$ controls the width of the margin. The smaller $C$ gets, the wider the margin becomes. 
+:::{.callout-tip collapse="true"}
+## Code
+<iframe src="https://trinket.io/embed/python3/f5645b90c8?toggleCode=true" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
 
-Some of the common choices are $0.001$, $0.01$, $0.1$, $1.0$, $100$, etc. 
 :::
+
+#### Choosing $C$
+Some of the common choices are $0.001$, $0.01$, $0.1$, $1.0$, $100$, etc. However, we usually use *cross-validation*
+to choose the best value for $C$.
+
+:::{.callout-tip collapse="true"}
+## Code
+<iframe src="https://trinket.io/embed/python3/5576855e7e?toggleCode=true" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+
+:::
+
+
+## Non-Linear Boundary
+For datasets, the inherit decision boundary is **non-linear**.
+
+- Can our SVM be extended to handle such cases?
+
+:::{.callout-tip collapse="true"}
+## Code
+<iframe src="https://trinket.io/embed/python3/963788c66a?toggleCode=true" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+
+:::
+
+#### Kernel Methods
+A **kernel** $K:\mathcal{X}\times\mathcal{X}\to\mathbb{R}^+$ mimics the concept of inner-product, but for a more general *Hilbert Space*. Some of the *good* (for optimization) kernels are:
+
+- **Linear Kernel:** hyperplane separation or usual inner-product
+$$K(\pmb{x}, \pmb{x}')=\langle\pmb{x}, \pmb{x}'\rangle$$
+
+- **Radial Basis Function (RBF):** 
+$$K(\pmb{x}, \pmb{x}')=\exp{\left(-\frac{\|\pmb{x}-\pmb{x}'\|^2}{2\sigma^2}\right)}.$$
+
+:::{.callout-tip collapse="true"}
+## Code
+<iframe src="https://trinket.io/embed/python3/2dbd6ff6e3?toggleCode=true" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+
+:::
+
+
+## Digit Recognition using SVM
 
 :::{.callout-tip collapse="false"}
-
-<iframe src="https://trinket.io/embed/python3/3c76c21357?toggleCode=true" width="100%" height="500" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+## Code
+<iframe src="https://trinket.io/embed/python3/fbe1763fc5?toggleCode=true&start=result" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
 
 :::
 
-## Kernel Method
-
-## Multi-class Classification
-
-
-## Appendix
 
 ```{ojs}
-pivots = Object({ x1: 2, y1: 2, x2: 4, y2: 4 });
 compute_c = function (points) {
   return points.y1 - compute_m(points) * points.x1;
 }
@@ -346,7 +394,7 @@ separates = function (data, x, y, z) {
 }
 draw = function (data, args = {}) {
   // Declare the chart dimensions and margins.
-  const width = args.width || 500;
+  const width = args.width || 600;
   const height = args.width || 400;
   const marginTop = args.marginTop || 5;
   const marginRight = args.marginRight || 20;
@@ -389,13 +437,13 @@ draw = function (data, args = {}) {
     .attr("text-anchor", "end")
     .attr("x", width - 50)
     .attr("y", height - 20 )
-    .text("X_1: age →");
+    .text("age (x1) →");
   svg.append("text")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-90)")
     .attr("y",  13)
     .attr("x", -20)
-    .text("X_2: education (yrs) →")
+    .text("education (x2) →")
 
   // Add the y-axis.
   svg
@@ -506,25 +554,26 @@ draw = function (data, args = {}) {
   // Return the SVG element.
   return svg.node();
 }
-generateData = function (min = -1, max = 1, n = 10, method = "linear") {
-  const rand = d3.randomUniform(min, max);
+generateData = function (xmin = -1, xmax = 1, ymin = -1, ymax = 1, n = 10, method = "linear") {
+  const randX = d3.randomUniform(xmin, xmax);
+  const randY = d3.randomUniform(ymin, ymax);
   const pivots = {
-    x1: rand(),
-    x2: rand(),
-    y1: rand(),
-    y2: rand()
+    x1: randX(),
+    x2: randX(),
+    y1: randY(),
+    y2: randY()
   };
-  const a = d3.randomUniform(0, 0.3)();
-  const b = d3.randomUniform(0, 0.3)();
+  const a = d3.randomUniform(0, 20)();
+  const b = d3.randomUniform(0, 10)();
 
   return d3.range(n).map((d) => {
-    const x = rand();
-    const y = rand();
+    const x = randX();
+    const y = randY();
     let z;
     if (method == "linear")
       z = y - compute_m(pivots) * x - compute_c(pivots) > 0 ? 0 : 1;
     else if (method == "quad") {
-      z = a * x * x + b * y * y - 1 > 0 ? 0 : 1;
+      z = (x - 50) * (x - 50) / (a * a) + (y - 8) * (y - 8) / (b * b) - 1 > 0 ? 0 : 1;
     }
     return {
       x: x,
@@ -533,5 +582,4 @@ generateData = function (min = -1, max = 1, n = 10, method = "linear") {
     };
   });
 }
-data1 = generateData(-5, 5, 15, "linear")
 ```
