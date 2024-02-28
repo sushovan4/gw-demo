@@ -2,7 +2,13 @@
 toc: false
 ---
 
-# Welcome {.unnumbered}
+# Welcome, Everyone! {.unnumbered}
 
-<iframe width="100%"  src="https://smajhi.com/" title="Webpage example"></iframe>
+![](images/cover.svg){width=400}
 
+## Who is the instructor?
+Name: [Dr. Sushovan Majhi](https://www.smajhi.com)
+
+Email: [s.majhi@gwu.edu](mailto://s.majhi@gwu.edu)
+
+Homepage: [smajhi.com](https://www.smajhi.com)
