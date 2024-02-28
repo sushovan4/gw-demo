@@ -388,7 +388,7 @@ Pseudocode
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="alg-sum-array" class="pseudocode-container" data-line-number-punc=":" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-index="1" data-line-number="true" data-no-end="false">
+<div id="alg-sum-array" class="pseudocode-container" data-pseudocode-index="1" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{SUM-ARRAY} \begin{algorithmic} \Procedure{SUM-ARRAY}{$A[0:n-1]$} \State $sum = 0$ \For{$i = 0$ \To $n-1$} \State $sum = sum + A[i]$ \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -414,7 +414,7 @@ Solution
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="31b8e8ed" class="cell" data-code-link="true" data-execution_count="1">
+<div id="7af8013f" class="cell" data-code-link="true" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> SUM_ARRAY(arr):</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
@@ -448,7 +448,7 @@ Pseudocode
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="alg-sum-array-pos" class="pseudocode-container" data-line-number-punc=":" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-index="2" data-line-number="true" data-no-end="false">
+<div id="alg-sum-array-pos" class="pseudocode-container" data-pseudocode-index="2" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{SUM-ARRAY-POS} \begin{algorithmic} \Procedure{SUM-ARRAY-POS}{$A[0:n-1]$} \State $sum = 0$ \For{$i = 0$ \To $n-1$} \If{$A[i] &gt; 0$} \State $sum = sum + A[i]$ \EndIf \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -474,7 +474,7 @@ Solution
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="7c70ca18" class="cell" data-code-link="true" data-execution_count="2">
+<div id="d13ed610" class="cell" data-code-link="true" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> SUM_ARRAY_POS(arr):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
@@ -509,7 +509,7 @@ Pseudocode
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="alg-search-array" class="pseudocode-container" data-line-number-punc=":" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-index="3" data-line-number="true" data-no-end="false">
+<div id="alg-search-array" class="pseudocode-container" data-pseudocode-index="3" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{SEARCH-ARRAY} \begin{algorithmic} \Procedure{SEARCH-ARRAY}{$A[0:n-1]$, $x$} \For{$i = 0$ \To $n-1$} \If{$A[i] = x$} \Return $i$ \EndIf \State $i = i + 1$ \EndFor \Return $-1$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -535,7 +535,7 @@ Solution
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="0f5d86f6" class="cell" data-code-link="true" data-execution_count="3">
+<div id="3e32c7ed" class="cell" data-code-link="true" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> SEARCH_ARRAY(arr, x):</span>
 <span id="cb3-2"><a href="#cb3-2"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
 <span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
@@ -561,7 +561,7 @@ Solution
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="alg-min-array" class="pseudocode-container" data-line-number-punc=":" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-index="4" data-line-number="true" data-no-end="false">
+<div id="alg-min-array" class="pseudocode-container" data-pseudocode-index="4" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{MIN-ARRAY} \begin{algorithmic} \Procedure{MIN-ARRAY}{$A[0:n-1]$} \State $min=A[0]$ \For{$i = 1$ \To $n-1$} \If{$A[i] &lt; min$} \State $min=A[i]$ \EndIf \State $i = i + 1$ \EndFor \Return $min$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
@@ -584,7 +584,7 @@ Solution
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<div id="alg-sum-matrix" class="pseudocode-container" data-line-number-punc=":" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-index="5" data-line-number="true" data-no-end="false">
+<div id="alg-sum-matrix" class="pseudocode-container" data-pseudocode-index="5" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-alg-title="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{SUM-MATRIX} \begin{algorithmic} \Procedure{SUM-MATRIX}{$A[0:n-1][0:n-1]$} \State $min=0$ \For{$i = 0$ \To $n-1$} \For{$j = 0$ \To $n-1$} \State $sum=sum + A[i][j]$ \State $j = j + 1$ \EndFor \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
 </div>
