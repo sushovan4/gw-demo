@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -114,49 +80,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" rel="stylesheet">
 
-  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../style.css">
 </head>
@@ -170,7 +93,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/regression.html">Supervised</a></li><li class="breadcrumb-item"><a href="../notes/regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/regression.html">Classical Methods</a></li><li class="breadcrumb-item"><a href="../notes/regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -207,7 +130,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Supervised</span></a>
+ <span class="menu-text">Classical Methods</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -234,39 +157,31 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Unsupervised</span></span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Jupyter Notebooks</span></span>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">Homework</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../homework/hw-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">hw-1.html</span></span></a>
+ <span class="menu-text">Homework 1</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendix/math.html" class="sidebar-item-text sidebar-link">
@@ -286,42 +201,20 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#computational-problems" id="toc-computational-problems" class="nav-link active" data-scroll-target="#computational-problems"><span class="header-section-number">1.1</span> Computational Problems</a></li>
-  <li><a href="#what-is-an-algorithm" id="toc-what-is-an-algorithm" class="nav-link" data-scroll-target="#what-is-an-algorithm"><span class="header-section-number">1.2</span> What is an Algorithm?</a>
-  <ul class="collapse">
-  <li><a href="#writing-pseudocode" id="toc-writing-pseudocode" class="nav-link" data-scroll-target="#writing-pseudocode">Writing Pseudocode</a></li>
-  </ul></li>
-  <li><a href="#example-algorithms" id="toc-example-algorithms" class="nav-link" data-scroll-target="#example-algorithms"><span class="header-section-number">1.3</span> Example Algorithms</a>
-  <ul class="collapse">
-  <li><a href="#sum-array" id="toc-sum-array" class="nav-link" data-scroll-target="#sum-array"><code>SUM-ARRAY</code></a></li>
-  <li><a href="#sum-array-pos" id="toc-sum-array-pos" class="nav-link" data-scroll-target="#sum-array-pos"><code>SUM-ARRAY-POS</code></a></li>
-  <li><a href="#search-array" id="toc-search-array" class="nav-link" data-scroll-target="#search-array"><code>SEARCH-ARRAY</code></a></li>
-  </ul></li>
-  <li><a href="#analyzing-algorithms" id="toc-analyzing-algorithms" class="nav-link" data-scroll-target="#analyzing-algorithms"><span class="header-section-number">1.4</span> Analyzing Algorithms</a>
-  <ul class="collapse">
-  <li><a href="#sum-array-1" id="toc-sum-array-1" class="nav-link" data-scroll-target="#sum-array-1"><code>SUM-ARRAY</code></a></li>
-  <li><a href="#sum-matrix-1" id="toc-sum-matrix-1" class="nav-link" data-scroll-target="#sum-matrix-1"><code>SUM-MATRIX</code></a></li>
-  <li><a href="#search-array-1" id="toc-search-array-1" class="nav-link" data-scroll-target="#search-array-1"><code>SEARCH-ARRAY</code></a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/regression.html">Supervised</a></li><li class="breadcrumb-item"><a href="../notes/regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/regression.html">Classical Methods</a></li><li class="breadcrumb-item"><a href="../notes/regression.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linear Regression</span></h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-body">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -333,459 +226,8 @@ window.Quarto = {
 </header>
 
 
-<div class="quote">
-<p>“Programming is the art of telling another human being what one wants the computer to do.”<br>
-– Donald E. Knuth</p>
-</div>
-<section id="computational-problems" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="computational-problems"><span class="header-section-number">1.1</span> Computational Problems</h2>
-<p>Let us first define a <strong>computational problem</strong>. A (computational) problem is a well-specified task stated in general terms, specifying the desired output for any acceptable input to the problem.</p>
-<p>For example, <strong>sorting</strong> a list of numbers is a computational problem. It stipulates that an acceptable input must be a list or collection of real numbers, and the desired output must be a list with the same numbers but arranged in increasing (equivalently decreasing) order.</p>
-<p>Keep in mind that the task of sorting a specific list (e.g.&nbsp;[0, -1, 2, 0]) <strong>should not</strong> be called a computational problem, since it is not given in general terms. When considering such a specific input to the problem, we may rather call it an <strong>instance</strong> of the sorting problem as discussed in the previous paragraph.</p>
-<p>Formally, we define the sorting problem as follows:</p>
-<ul>
-<li><p><strong>Input:</strong> an array of numbers <span class="math inline">A=\langle a_1, a_2, \ldots, a_n\rangle</span>.</p></li>
-<li><p><strong>Output:</strong> A reordering or permutation <span class="math inline">\langle a_1', a_2', \ldots, a_n'\rangle</span> of the array <span class="math inline">A</span> such that <span class="math display">a_1'\leq a_2'\leq\ldots\leq a_n.</span></p></li>
-</ul>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.1</strong></span> Name five computational problems that we come across in our daily lives.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution:
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<ul>
-<li><p>adding two numbers</p></li>
-<li><p>sorting an array</p></li>
-<li><p>finding the minimum value is an array</p></li>
-<li><p>searching a query value in an array</p></li>
-<li><p>finding the shortest path between two vertices in a graph</p></li>
-</ul>
-</div>
-</div>
-</div>
-<p>We use algorithms to solve <strong>computational problems</strong>.</p>
-</section>
-<section id="what-is-an-algorithm" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="what-is-an-algorithm"><span class="header-section-number">1.2</span> What is an Algorithm?</h2>
-<p>An <strong>algorithm</strong> is any <em>well-defined</em> computational procedure that takes some value (or set of values) as <strong>input</strong> and produces some value as <strong>output</strong>. Thus, an algorithm is a sequence of (finite) computational steps that transform its input to an output.</p>
-<p>We may have <em>different</em> algorithms to solve the same computational problem. However, they often differ dramatically in their efficiency.</p>
-<section id="writing-pseudocode" class="level3">
-<h3 class="anchored" data-anchor-id="writing-pseudocode">Writing Pseudocode</h3>
-<p>In this course, we mostly rely on pseudocodes for describing algorithms. Their implementation in Python will be an less significant step. Pseudocode delineates the logic of an algorithm without explicitly using the syntax of a programming language.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Convention
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>We use the following conventions in our pseudocode:</p>
-<ul>
-<li><p>Indentation indicates block structure.</p></li>
-<li><p>The looping constructs <code>while</code>, <code>for</code>, and <code>repeat-until</code> and the <code>if-else</code> conditional construct have interpretations similar to Python.</p></li>
-<li><p>The symbol <code>//</code> indicates that the remainder of the line is a comment.</p></li>
-<li><p>Variables (such as <code>i</code>, <code>j</code> , and <code>key</code>) are local to the given procedure. We won’t use global variables without explicit indication.</p></li>
-<li><p>We access array elements by specifying the array name followed by the index in square brackets. For example, <code>A[i]</code> indicates the <code>i</code>th element of the array <code>A</code>.</p></li>
-<li><p>We typically organize compound data into objects, which are composed of attributes.</p></li>
-<li><p>We pass parameters to a procedure by <code>value</code>: the called procedure receives its own copy of the parameters, and if it assigns a value to a parameter, the change is not seen by the calling procedure</p></li>
-<li><p>A <code>return</code> statement immediately transfers control back to the point of call in the calling procedure.</p></li>
-<li><p>The boolean operators <code>and</code> and <code>or</code> are short circuiting.</p></li>
-</ul>
-</div>
-</div>
-</div>
-<p>We give a few examples first.</p>
-</section>
-</section>
-<section id="example-algorithms" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="example-algorithms"><span class="header-section-number">1.3</span> Example Algorithms</h2>
-<p>Let us develop and analyze a few example algorithms.</p>
-<section id="sum-array" class="level3">
-<h3 class="anchored" data-anchor-id="sum-array"><code>SUM-ARRAY</code></h3>
-<p><strong>Description:</strong> <code>SUM-ARRAY</code> is a computational problem that computes the sum of the <span class="math inline">n</span> numbers in array <span class="math inline">A[0:n-1]</span>.</p>
-<ul>
-<li><p><strong>Input</strong>: An array or list <span class="math inline">A[0:n-1]</span> containing <span class="math inline">n</span> numbers.</p></li>
-<li><p><strong>Output</strong>: The sum of the numbers in <span class="math inline">A[0:n-1]</span>.</p></li>
-</ul>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1.1</strong></span> If the input array is <code>A = &lt;1, 0, -1, 2&gt;</code>, then the return must be <code>1 + 0 + (-1) + 2 = 2</code>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Pseudocode
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="alg-sum-array" class="pseudocode-container" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-pseudocode-index="1" data-alg-title="Algorithm" data-line-number="true" data-indent-size="1.2em">
-<div class="pseudocode">
-\begin{algorithm} \caption{SUM-ARRAY} \begin{algorithmic} \Procedure{SUM-ARRAY}{$A[0:n-1]$} \State $sum = 0$ \For{$i = 0$ \To $n-1$} \State $sum = sum + A[i]$ \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.2</strong></span> (Dry)-run <code>SUM-ARRAY</code> on the input <code>A=&lt;-2, 3, 5, 0, -1&gt;</code>.</p>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.3</strong></span> Implement <code>SUM-ARRAY</code> in Python.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="faff92d1" class="cell" data-code-link="true" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">def</span> SUM_ARRAY(arr):</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb1-5"><a href="#cb1-5"></a>        <span class="bu">sum</span> <span class="op">=</span> <span class="bu">sum</span> <span class="op">+</span> arr[i]</span>
-<span id="cb1-6"><a href="#cb1-6"></a>    <span class="cf">return</span> <span class="bu">sum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="sum-array-pos" class="level3">
-<h3 class="anchored" data-anchor-id="sum-array-pos"><code>SUM-ARRAY-POS</code></h3>
-<p><strong>Description:</strong> <code>SUM-ARRAY-POS</code> is a computational problem that computes the sum of the <strong>positive</strong> numbers in an array <span class="math inline">A[0:n-1]</span> of size <span class="math inline">n</span>.</p>
-<ul>
-<li><p><strong>Input</strong>: An array or list <span class="math inline">A[0:n-1]</span> containing <span class="math inline">n</span> numbers.</p></li>
-<li><p><strong>Output</strong>: The sum of the positive numbers in <span class="math inline">A</span>.</p></li>
-</ul>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1.2</strong></span> If the input is the array <code>A = &lt;1, 0, -1, 2&gt;</code>, then the return will be <code>1 + 2 = 3</code>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Pseudocode
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="alg-sum-array-pos" class="pseudocode-container" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-pseudocode-index="2" data-alg-title="Algorithm" data-line-number="true" data-indent-size="1.2em">
-<div class="pseudocode">
-\begin{algorithm} \caption{SUM-ARRAY-POS} \begin{algorithmic} \Procedure{SUM-ARRAY-POS}{$A[0:n-1]$} \State $sum = 0$ \For{$i = 0$ \To $n-1$} \If{$A[i] &gt; 0$} \State $sum = sum + A[i]$ \EndIf \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.4</strong></span> (Dry)-run <code>SUM-ARRAY-POS</code> on the input <code>A=&lt;-2, 3, 5, 0, -1&gt;</code>.</p>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.5</strong></span> Implement <code>SUM-ARRAY-POS</code> in Python.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="f10a4351" class="cell" data-code-link="true" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> SUM_ARRAY_POS(arr):</span>
-<span id="cb2-2"><a href="#cb2-2"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb2-5"><a href="#cb2-5"></a>      <span class="cf">if</span> arr[i] <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb2-6"><a href="#cb2-6"></a>        <span class="bu">sum</span> <span class="op">=</span> <span class="bu">sum</span> <span class="op">+</span> arr[i]</span>
-<span id="cb2-7"><a href="#cb2-7"></a>    <span class="cf">return</span> <span class="bu">sum</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="search-array" class="level3">
-<h3 class="anchored" data-anchor-id="search-array"><code>SEARCH-ARRAY</code></h3>
-<p><strong>Description:</strong> <code>SEARCH-ARRAY</code> is a computational problem that finds an element in an array.</p>
-<ul>
-<li><p><strong>Input</strong>: An array or list <span class="math inline">A[0:n-1]</span> containing <span class="math inline">n</span> numbers and a query value <span class="math inline">x</span>.</p></li>
-<li><p><strong>Output</strong>: An first index <span class="math inline">i</span> such that <span class="math inline">A[i]=x</span>, otherwise <span class="math inline">-1</span>.</p></li>
-</ul>
-<div id="exm-" class="theorem example">
-<p><span class="theorem-title"><strong>Example 1.3</strong></span> If the inputs are the array <code>A = &lt;1, 0, -1, 2&gt;</code> and the value <code>x = 0</code>, then the return will be <code>1</code>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Pseudocode
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="alg-search-array" class="pseudocode-container" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-pseudocode-index="3" data-alg-title="Algorithm" data-line-number="true" data-indent-size="1.2em">
-<div class="pseudocode">
-\begin{algorithm} \caption{SEARCH-ARRAY} \begin{algorithmic} \Procedure{SEARCH-ARRAY}{$A[0:n-1]$, $x$} \For{$i = 0$ \To $n-1$} \If{$A[i] = x$} \Return $i$ \EndIf \State $i = i + 1$ \EndFor \Return $-1$ \EndProcedure \end{algorithmic} \end{algorithm}
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.6</strong></span> (Dry)-run <code>SEARCH-ARRAY</code> on the input <code>A=&lt;-2, 3, 5, 0, -1&gt;</code> and <code>x=4</code>.</p>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.7</strong></span> Implement <code>SEARCH-ARRAY</code> in Python.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="0fa9ac47" class="cell" data-code-link="true" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> SEARCH_ARRAY(arr, x):</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    n <span class="op">=</span> <span class="bu">len</span>(arr)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb3-4"><a href="#cb3-4"></a>        <span class="cf">if</span> arr[i] <span class="op">==</span> x:</span>
-<span id="cb3-5"><a href="#cb3-5"></a>          <span class="cf">return</span> i</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.8 (<code>MIN-ARRAY</code>)</strong></span> Develop an algorithm to find the minimum value in an array <span class="math inline">A[0:n-1]</span>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="alg-min-array" class="pseudocode-container" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-pseudocode-index="4" data-alg-title="Algorithm" data-line-number="true" data-indent-size="1.2em">
-<div class="pseudocode">
-\begin{algorithm} \caption{MIN-ARRAY} \begin{algorithmic} \Procedure{MIN-ARRAY}{$A[0:n-1]$} \State $min=A[0]$ \For{$i = 1$ \To $n-1$} \If{$A[i] &lt; min$} \State $min=A[i]$ \EndIf \State $i = i + 1$ \EndFor \Return $min$ \EndProcedure \end{algorithmic} \end{algorithm}
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.9 (<code>SUM-MATRIX</code>)</strong></span> Develop an algorithm for summing all the elements in a square matrix <span class="math inline">A=[a_{i,j}]</span> of size <span class="math inline">n\times n</span>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="alg-sum-matrix" class="pseudocode-container" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-pseudocode-index="5" data-alg-title="Algorithm" data-line-number="true" data-indent-size="1.2em">
-<div class="pseudocode">
-\begin{algorithm} \caption{SUM-MATRIX} \begin{algorithmic} \Procedure{SUM-MATRIX}{$A[0:n-1][0:n-1]$} \State $min=0$ \For{$i = 0$ \To $n-1$} \For{$j = 0$ \To $n-1$} \State $sum=sum + A[i][j]$ \State $j = j + 1$ \EndFor \State $i = i + 1$ \EndFor \Return $sum$ \EndProcedure \end{algorithmic} \end{algorithm}
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="analyzing-algorithms" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="analyzing-algorithms"><span class="header-section-number">1.4</span> Analyzing Algorithms</h2>
-<p><strong>Analyzing</strong> an algorithm means to predict the computational resources (e.g.&nbsp;computational time, memory) needed to run the algorithm on different instances or inputs. But how do we compute the running time of an algorithm?</p>
-<div id="exr-" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.10</strong></span> Do you think it is easy to compute the time taken by an algorithm?</p>
-</div>
-<p>Although such a task is almost <em>impossible</em>, we can still pretty easily analyze the computational time of an algorithm—at least conceptually!</p>
-<p>Let’s use first review our basic intuition behind running-time of an algorithm:</p>
-<ul>
-<li><p>it should depend on the input size</p></li>
-<li><p>the larger the input size, the more time needed</p></li>
-<li><p>running-time should be machine and compiler dependent</p></li>
-</ul>
-<p>In order to make the task easier, we sum the running times for each statement executed. We usually denote the running time of an algorithm on an input of size <span class="math inline">n</span> by <span class="math inline">T(n)</span>.</p>
-<section id="sum-array-1" class="level3">
-<h3 class="anchored" data-anchor-id="sum-array-1"><code>SUM-ARRAY</code></h3>
-<p>For each line in the algorithm, we assign a cost symbolically, then count how many times the line is visited. This is summarized in the following table.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Line</th>
-<th>Cost</th>
-<th>Times</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">2</span></td>
-<td><span class="math inline">c_1</span></td>
-<td><span class="math inline">1</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">3</span></td>
-<td><span class="math inline">c_2</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">4</span></td>
-<td><span class="math inline">c_3</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">5</span></td>
-<td><span class="math inline">c_4</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">6</span></td>
-<td><span class="math inline">c_5</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">7</span></td>
-<td><span class="math inline">c_5</span></td>
-<td><span class="math inline">1</span></td>
-</tr>
-</tbody>
-</table>
-<p>So, <span class="math display">T(n)=(c_1 + c_5) + (c_2 + c_3 + c_4)n=a + bn,</span> where <span class="math inline">a\coloneqq(c_1 + c_5)</span> and <span class="math inline">b\coloneqq(c_2 + c_3 + c_4)</span>. This is a <strong>linear function</strong> of the input size.</p>
-</section>
-<section id="sum-matrix-1" class="level3">
-<h3 class="anchored" data-anchor-id="sum-matrix-1"><code>SUM-MATRIX</code></h3>
-<div id="exr-1" class="theorem exercise">
-<p><span class="theorem-title"><strong>Exercise 1.11</strong></span> Analyze the running time of <code>SUM-MATRIX</code>.</p>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Solution
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>We refer to the pseudocode of <code>SUM-MATRIX</code> for this analysis.</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Line</th>
-<th>Cost</th>
-<th>Times</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">2</span></td>
-<td><span class="math inline">c_1</span></td>
-<td><span class="math inline">1</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">3</span></td>
-<td><span class="math inline">c_2</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">4</span></td>
-<td><span class="math inline">c_3</span></td>
-<td><span class="math inline">n\times n</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">5</span></td>
-<td><span class="math inline">c_4</span></td>
-<td><span class="math inline">n\times n</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">6</span></td>
-<td><span class="math inline">c_5</span></td>
-<td><span class="math inline">n\times n</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">8</span></td>
-<td><span class="math inline">c_6</span></td>
-<td><span class="math inline">n</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">10</span></td>
-<td><span class="math inline">c_7</span></td>
-<td><span class="math inline">1</span></td>
-</tr>
-</tbody>
-</table>
-<p>So, the running time <span class="math display">T(n)=(c_1 + c_7) + (c_2 + c_6)n + (c_3 + c_4 + c_5)n^2=a + bn+cn^2,</span> where <span class="math inline">a\coloneqq(c_1 + c_7)</span>, <span class="math inline">b\coloneqq(c_2 + c_6)</span>, and <span class="math inline">c\coloneqq(c_3 + c_4 + c_5)</span>. This is a <strong>quadratic function</strong> of the input size.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="search-array-1" class="level3">
-<h3 class="anchored" data-anchor-id="search-array-1"><code>SEARCH-ARRAY</code></h3>
-<p>For this analysis, we first note the <strong>best case</strong> and the <strong>worst case</strong> inputs.</p>
-<p>The best case is when the value <span class="math inline">x</span> is the first element of the input array <span class="math inline">A</span>. The search halts in the very first iteration. In this case, the running time is <span class="math inline">T(n)=a</span> for some constant <span class="math inline">a</span>.</p>
-<p>The worst case occurs when the value <span class="math inline">x</span> is the last element of the input array <span class="math inline">A</span> or <span class="math inline">x</span> does not belong to <span class="math inline">A</span>. The search, in this case, loops through all the elements of the array. In this case, the running time is <span class="math inline">T(n)=a + bn</span> for some constants <span class="math inline">a,b</span>.</p>
-<div class="quarto-figure quarto-figure-right">
-<figure class="figure">
-<p><img src="../images/A-caricature-of-a-Turing-machine-in-its-ennvironment-taken-from-Markos-Kelemen_W640.jpg" class="img-fluid quarto-figure quarto-figure-right figure-img"></p>
-<figcaption>Turing Machine taken from Markoš, Kelemen, 2004</figcaption>
-</figure>
-</div>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1175,7 +617,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation column-body">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="../index.html" class="pagination-link  aria-label=" welcome"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
