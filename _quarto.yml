@@ -11,13 +11,11 @@ book:
   description: Lecture Notes for DATS-6202
   chapters:
     - index.qmd
-    - part: Supervised
+    - part: Classical Methods
       chapters:
         - notes/regression.qmd
         - notes/logit.qmd
         - notes/svm.qmd
-    - part: Unsupervised
-    - part: Jupyter Notebooks
     - part: Homework
       chapters: 
         - homework/hw-1.qmd

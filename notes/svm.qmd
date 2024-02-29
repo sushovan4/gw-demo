@@ -282,10 +282,37 @@ $$K(\pmb{x}, \pmb{x}')=\exp{\left(-\frac{\|\pmb{x}-\pmb{x}'\|^2}{2\sigma^2}\righ
 
 :::{.callout-tip collapse="false"}
 ## Code
-<iframe src="https://trinket.io/embed/python3/fbe1763fc5?toggleCode=true&start=result" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+<iframe src="https://trinket.io/embed/python3/fbe1763fc5?toggleCode=true" width="100%" height="800" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
 
 :::
 
+## Conclusion
+- Theoretically well-understood.
+
+- Extremely promising in applications.
+
+- Works well for *balanced data*. If not balanced:
+  - resample
+  - use class weights
+
+- Primarily a binary classifier. However, **multi-class classification** can be done using:
+  - one-vs-others
+  - one-vs-one
+  - Read more on [Medium](https://towardsdatascience.com/implement-multiclass-svm-from-scratch-in-python-b141e43dc084)
+
+## Resources
+
+- Books:
+  - Introduction to Statistical Learning, Chapter 9.
+
+
+- Code:
+  - <a href="../notebooks/svm.py" download>svm.ipynb</a> 
+  - <a href="../notebooks/svm.py" download>svm_plot.py</a>
+
+- [Hypothesis](hypothes.is) note-taking tool
+
+### References
 
 ```{ojs}
 compute_c = function (points) {
